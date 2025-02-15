@@ -1,0 +1,57 @@
+# Virtual environment (Flask)
+venv/
+.env
+*.env
+*.pyc
+__pycache__/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+
+# Python dependencies
+*.egg-info/
+dist/
+build/
+
+# Logs and local config
+logs/
+*.log
+
+# Model files and large data files
+*.pkl
+*.h5
+*.pt
+*.ckpt
+*.joblib
+
+# Cache and temporary files
+__pycache__/
+.DS_Store
+
+### ANGULAR ###
+
+# Node modules (Angular dependencies)
+node_modules/
+
+# Angular build output
+dist/
+out-tsc/
+
+# Temporary files
+.tmp/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Angular specific IDE settings
+.angular/
+*.log
+*.tsbuildinfo
+.eslintcache
+
+# Ignore environment files (important for security)
+src/environments/environment.prod.ts
+src/environments/environment.ts

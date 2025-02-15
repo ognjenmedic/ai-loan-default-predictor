@@ -1,0 +1,1418 @@
+{
+    "application": {
+        "SK_ID_CURR": {
+            "dtype": "int64",
+            "min": 100002.0,
+            "max": 456255.0,
+            "mean": 278180.51857657125,
+            "std": 102790.17534842374
+        },
+        "TARGET": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 1.0,
+            "mean": 0.08072881945686496,
+            "std": 0.27241864564839396
+        },
+        "NAME_CONTRACT_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Cash loans",
+                "Revolving loans"
+            ]
+        },
+        "CODE_GENDER": {
+            "dtype": "category",
+            "categories": [
+                "M",
+                "F",
+                "XNA"
+            ]
+        },
+        "FLAG_OWN_CAR": {
+            "dtype": "category",
+            "categories": [
+                "N",
+                "Y"
+            ]
+        },
+        "FLAG_OWN_REALTY": {
+            "dtype": "category",
+            "categories": [
+                "Y",
+                "N"
+            ]
+        },
+        "CNT_CHILDREN": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 19.0,
+            "mean": 0.4170517477423572,
+            "std": 0.7221213844376252
+        },
+        "AMT_INCOME_TOTAL": {
+            "dtype": "float64",
+            "min": 25650.0,
+            "max": 117000000.0,
+            "mean": 168797.9192969845,
+            "std": 237123.14627883647
+        },
+        "AMT_CREDIT": {
+            "dtype": "float64",
+            "min": 45000.0,
+            "max": 4050000.0,
+            "mean": 599025.9997057016,
+            "std": 402490.776995946
+        },
+        "AMT_ANNUITY": {
+            "dtype": "float64",
+            "min": 1615.5,
+            "max": 258025.5,
+            "mean": 27108.48784108536,
+            "std": 14493.461065491048
+        },
+        "AMT_GOODS_PRICE": {
+            "dtype": "float64",
+            "min": 40500.0,
+            "max": 4050000.0,
+            "mean": 538316.2943667056,
+            "std": 369288.98224565014
+        },
+        "NAME_TYPE_SUITE": {
+            "dtype": "category",
+            "categories": [
+                "Unaccompanied",
+                "Family",
+                "Spouse, partner",
+                "Children",
+                "Other_A",
+                "Other_B",
+                "Group of people"
+            ]
+        },
+        "NAME_INCOME_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Working",
+                "State servant",
+                "Commercial associate",
+                "Pensioner",
+                "Unemployed",
+                "Student",
+                "Businessman",
+                "Maternity leave"
+            ]
+        },
+        "NAME_EDUCATION_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Secondary / secondary special",
+                "Higher education",
+                "Incomplete higher",
+                "Lower secondary",
+                "Academic degree"
+            ]
+        },
+        "NAME_FAMILY_STATUS": {
+            "dtype": "category",
+            "categories": [
+                "Single / not married",
+                "Married",
+                "Civil marriage",
+                "Widow",
+                "Separated",
+                "Unknown"
+            ]
+        },
+        "NAME_HOUSING_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "House / apartment",
+                "Rented apartment",
+                "With parents",
+                "Municipal apartment",
+                "Office apartment",
+                "Co-op apartment"
+            ]
+        },
+        "REGION_POPULATION_RELATIVE": {
+            "dtype": "float64",
+            "min": 0.00029,
+            "max": 0.072508,
+            "mean": 0.02086811205778004,
+            "std": 0.013831280122699869
+        },
+        "DAYS_BIRTH": {
+            "dtype": "int64",
+            "min": -25229.0,
+            "max": -7489.0,
+            "mean": -16036.995066843137,
+            "std": 4363.988631785526
+        },
+        "DAYS_EMPLOYED": {
+            "dtype": "int64",
+            "min": -17912.0,
+            "max": 365243.0,
+            "mean": 63815.04590404896,
+            "std": 141275.7665186621
+        },
+        "DAYS_REGISTRATION": {
+            "dtype": "float64",
+            "min": -24672.0,
+            "max": 0.0,
+            "mean": -4986.120327538418,
+            "std": 3522.88632096305
+        },
+        "DAYS_ID_PUBLISH": {
+            "dtype": "int64",
+            "min": -7197.0,
+            "max": 0.0,
+            "mean": -2994.2023732484367,
+            "std": 1509.450419003031
+        },
+        "FLAG_MOBIL": {
+            "dtype": "category",
+            "categories": [
+                1,
+                0
+            ]
+        },
+        "FLAG_EMP_PHONE": {
+            "dtype": "category",
+            "categories": [
+                1,
+                0
+            ]
+        },
+        "FLAG_WORK_PHONE": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_CONT_MOBILE": {
+            "dtype": "category",
+            "categories": [
+                1,
+                0
+            ]
+        },
+        "FLAG_PHONE": {
+            "dtype": "category",
+            "categories": [
+                1,
+                0
+            ]
+        },
+        "FLAG_EMAIL": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "OCCUPATION_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Laborers",
+                "Core staff",
+                "Accountants",
+                "Managers",
+                "Drivers",
+                "Sales staff",
+                "Cleaning staff",
+                "Cooking staff",
+                "Private service staff",
+                "Medicine staff",
+                "Security staff",
+                "High skill tech staff",
+                "Waiters/barmen staff",
+                "Low-skill Laborers",
+                "Realty agents",
+                "Secretaries",
+                "IT staff",
+                "HR staff"
+            ]
+        },
+        "CNT_FAM_MEMBERS": {
+            "dtype": "Int64",
+            "min": 1.0,
+            "max": 20.0,
+            "mean": 2.1526644575316003,
+            "std": 0.910678690929807
+        },
+        "REGION_RATING_CLIENT": {
+            "dtype": "Int64",
+            "min": 1.0,
+            "max": 3.0,
+            "mean": 2.0524631639193394,
+            "std": 0.50903390281568
+        },
+        "REGION_RATING_CLIENT_W_CITY": {
+            "dtype": "Int64",
+            "min": 1.0,
+            "max": 3.0,
+            "mean": 2.031520823645333,
+            "std": 0.5027370329147687
+        },
+        "WEEKDAY_APPR_PROCESS_START": {
+            "dtype": "category",
+            "categories": [
+                "WEDNESDAY",
+                "MONDAY",
+                "THURSDAY",
+                "SUNDAY",
+                "SATURDAY",
+                "FRIDAY",
+                "TUESDAY"
+            ]
+        },
+        "HOUR_APPR_PROCESS_START": {
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 23.0,
+            "mean": 12.063418869568894,
+            "std": 3.265832255439005
+        },
+        "REG_REGION_NOT_LIVE_REGION": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "REG_REGION_NOT_WORK_REGION": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "LIVE_REGION_NOT_WORK_REGION": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "REG_CITY_NOT_LIVE_CITY": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "REG_CITY_NOT_WORK_CITY": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "LIVE_CITY_NOT_WORK_CITY": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "ORGANIZATION_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Business Entity Type 3",
+                "School",
+                "Government",
+                "Religion",
+                "Other",
+                "XNA",
+                "Electricity",
+                "Medicine",
+                "Business Entity Type 2",
+                "Self-employed",
+                "Transport: type 2",
+                "Construction",
+                "Housing",
+                "Kindergarten",
+                "Trade: type 7",
+                "Industry: type 11",
+                "Military",
+                "Services",
+                "Security Ministries",
+                "Transport: type 4",
+                "Industry: type 1",
+                "Emergency",
+                "Security",
+                "Trade: type 2",
+                "University",
+                "Transport: type 3",
+                "Police",
+                "Business Entity Type 1",
+                "Postal",
+                "Industry: type 4",
+                "Agriculture",
+                "Restaurant",
+                "Culture",
+                "Hotel",
+                "Industry: type 7",
+                "Trade: type 3",
+                "Industry: type 3",
+                "Bank",
+                "Industry: type 9",
+                "Insurance",
+                "Trade: type 6",
+                "Industry: type 2",
+                "Transport: type 1",
+                "Industry: type 12",
+                "Mobile",
+                "Trade: type 1",
+                "Industry: type 5",
+                "Industry: type 10",
+                "Legal Services",
+                "Advertising",
+                "Trade: type 5",
+                "Cleaning",
+                "Industry: type 13",
+                "Trade: type 4",
+                "Telecom",
+                "Industry: type 8",
+                "Realtor",
+                "Industry: type 6"
+            ]
+        },
+        "EXT_SOURCE_2": {
+            "dtype": "float64",
+            "min": 8.173616518884397e-08,
+            "max": 0.8549996664047012,
+            "mean": 0.5145033543220389,
+            "std": 0.1908699315412981
+        },
+        "EXT_SOURCE_3": {
+            "dtype": "float64",
+            "min": 0.0005272652387098,
+            "max": 0.8960095494948396,
+            "mean": 0.5156949091808122,
+            "std": 0.17473571710873223
+        },
+        "YEARS_BEGINEXPLUATATION_AVG": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 1.0,
+            "mean": 0.9796203137448742,
+            "std": 0.042428552701474956
+        },
+        "FLOORSMAX_AVG": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 1.0,
+            "mean": 0.19663346059165362,
+            "std": 0.10676120070550124
+        },
+        "YEARS_BEGINEXPLUATATION_MODE": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 1.0,
+            "mean": 0.9792774102389835,
+            "std": 0.04627046504144318
+        },
+        "FLOORSMAX_MODE": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 1.0,
+            "mean": 0.19464054293992733,
+            "std": 0.10558789050544241
+        },
+        "YEARS_BEGINEXPLUATATION_MEDI": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 1.0,
+            "mean": 0.9796292288731135,
+            "std": 0.042910033879394543
+        },
+        "FLOORSMAX_MEDI": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 1.0,
+            "mean": 0.1964398805245991,
+            "std": 0.1069979560082769
+        },
+        "TOTALAREA_MODE": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 1.0,
+            "mean": 0.0862576489946701,
+            "std": 0.07910992658867647
+        },
+        "EMERGENCYSTATE_MODE": {
+            "dtype": "category",
+            "categories": [
+                "No",
+                "Yes"
+            ]
+        },
+        "OBS_30_CNT_SOCIAL_CIRCLE": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 348.0,
+            "mean": 1.4175232755901415,
+            "std": 2.3983954060602914
+        },
+        "DEF_30_CNT_SOCIAL_CIRCLE": {
+            "dtype": "category",
+            "categories": [
+                2.0,
+                0.0,
+                1.0,
+                3.0,
+                4.0,
+                5.0,
+                6.0,
+                7.0,
+                34.0,
+                8.0
+            ]
+        },
+        "OBS_60_CNT_SOCIAL_CIRCLE": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 344.0,
+            "mean": 1.4006263190585053,
+            "std": 2.3772242660544616
+        },
+        "DEF_60_CNT_SOCIAL_CIRCLE": {
+            "dtype": "category",
+            "categories": [
+                2.0,
+                0.0,
+                1.0,
+                3.0,
+                5.0,
+                4.0,
+                7.0,
+                24.0,
+                6.0
+            ]
+        },
+        "DAYS_LAST_PHONE_CHANGE": {
+            "dtype": "Int64",
+            "min": -4292.0,
+            "max": 0.0,
+            "mean": -962.8581188965597,
+            "std": 826.8072260174033
+        },
+        "FLAG_DOCUMENT_2": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_3": {
+            "dtype": "category",
+            "categories": [
+                1,
+                0
+            ]
+        },
+        "FLAG_DOCUMENT_4": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_5": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_6": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_7": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_8": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_9": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_10": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_11": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_12": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_13": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_14": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_15": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_16": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_17": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_18": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_19": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_20": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "FLAG_DOCUMENT_21": {
+            "dtype": "category",
+            "categories": [
+                0,
+                1
+            ]
+        },
+        "AMT_REQ_CREDIT_BUREAU_HOUR": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 4.0,
+            "mean": 0.005538013274321894,
+            "std": 0.07801413049717408
+        },
+        "AMT_REQ_CREDIT_BUREAU_DAY": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 9.0,
+            "mean": 0.0060550679487888235,
+            "std": 0.103037120108819
+        },
+        "AMT_REQ_CREDIT_BUREAU_WEEK": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 8.0,
+            "mean": 0.029722513991369416,
+            "std": 0.19072793759960446
+        },
+        "AMT_REQ_CREDIT_BUREAU_MON": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 27.0,
+            "mean": 0.23129253912868158,
+            "std": 0.8568100735735287
+        },
+        "AMT_REQ_CREDIT_BUREAU_QRT": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 261.0,
+            "mean": 0.22963080995476584,
+            "std": 0.7440589926520408
+        },
+        "AMT_REQ_CREDIT_BUREAU_YEAR": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 25.0,
+            "mean": 1.778463209446166,
+            "std": 1.76552314771504
+        }
+    },
+    "bureau_data": {
+        "SK_ID_CURR": {
+            "dtype": "int64",
+            "min": 100001.0,
+            "max": 456255.0,
+            "mean": 278214.9336447553,
+            "std": 102938.55811238126
+        },
+        "SK_ID_BUREAU": {
+            "dtype": "int64",
+            "min": 5000000.0,
+            "max": 6843457.0,
+            "mean": 5924434.489031873,
+            "std": 532265.7285521366
+        },
+        "CREDIT_ACTIVE": {
+            "dtype": "category",
+            "categories": [
+                "Closed",
+                "Active",
+                "Sold",
+                "Bad debt"
+            ]
+        },
+        "CREDIT_CURRENCY": {
+            "dtype": "category",
+            "categories": [
+                "currency 1",
+                "currency 2",
+                "currency 4",
+                "currency 3"
+            ]
+        },
+        "DAYS_CREDIT": {
+            "dtype": "int64",
+            "min": -2922.0,
+            "max": 0.0,
+            "mean": -1142.107684680045,
+            "std": 795.1649282053439
+        },
+        "CREDIT_DAY_OVERDUE": {
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 2792.0,
+            "mean": 0.8181665645165425,
+            "std": 36.54442800674444
+        },
+        "DAYS_CREDIT_ENDDATE": {
+            "dtype": "float64",
+            "min": -42060.0,
+            "max": 31199.0,
+            "mean": 458.8291300305052,
+            "std": 4842.433607168771
+        },
+        "DAYS_ENDDATE_FACT": {
+            "dtype": "float64",
+            "min": -42023.0,
+            "max": 0.0,
+            "mean": -972.9754169705924,
+            "std": 570.0721790888729
+        },
+        "CNT_CREDIT_PROLONG": {
+            "dtype": "category",
+            "categories": [
+                0,
+                2,
+                1,
+                4,
+                3,
+                5,
+                9,
+                8,
+                6,
+                7
+            ]
+        },
+        "AMT_CREDIT_SUM": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 585000000.0,
+            "mean": 354992.8538959234,
+            "std": 1149807.1631418169
+        },
+        "AMT_CREDIT_SUM_DEBT": {
+            "dtype": "float64",
+            "min": -4705600.32,
+            "max": 170100000.0,
+            "mean": 116505.99529738154,
+            "std": 626405.8185548411
+        },
+        "AMT_CREDIT_SUM_LIMIT": {
+            "dtype": "float64",
+            "min": -586406.115,
+            "max": 4705600.32,
+            "mean": 4081.739265244449,
+            "std": 36571.685618372874
+        },
+        "AMT_CREDIT_SUM_OVERDUE": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 3756681.0,
+            "mean": 37.91275774165884,
+            "std": 5937.650034879731
+        },
+        "CREDIT_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Consumer credit",
+                "Credit card",
+                "Mortgage",
+                "Car loan",
+                "Microloan",
+                "Loan for working capital replenishment",
+                "Loan for business development",
+                "Real estate loan",
+                "Unknown type of loan",
+                "Another type of loan",
+                "Cash loan (non-earmarked)",
+                "Loan for the purchase of equipment",
+                "Mobile operator loan",
+                "Interbank credit",
+                "Loan for purchase of shares (margin lending)"
+            ]
+        },
+        "DAYS_CREDIT_UPDATE": {
+            "dtype": "int64",
+            "min": -41947.0,
+            "max": 372.0,
+            "mean": -593.7483197663986,
+            "std": 720.7473115012923
+        }
+    },
+    "bureau_balance_data": {
+        "SK_ID_BUREAU": {
+            "dtype": "int64",
+            "min": 5001709.0,
+            "max": 6842888.0,
+            "mean": 6036297.332973552,
+            "std": 492348.8569041263
+        },
+        "MONTHS_BALANCE": {
+            "dtype": "int64",
+            "min": -96.0,
+            "max": 0.0,
+            "mean": -30.74168665298531,
+            "std": 23.86450897786614
+        },
+        "STATUS": {
+            "dtype": "category",
+            "categories": [
+                "C",
+                "0",
+                "X",
+                "1",
+                "2",
+                "3",
+                "5",
+                "4"
+            ]
+        }
+    },
+    "credit_card_balance_data": {
+        "SK_ID_PREV": {
+            "dtype": "int64",
+            "min": 1000018.0,
+            "max": 2843496.0,
+            "mean": 1904503.589899727,
+            "std": 536469.4705633324
+        },
+        "SK_ID_CURR": {
+            "dtype": "int64",
+            "min": 100006.0,
+            "max": 456250.0,
+            "mean": 278324.20728888694,
+            "std": 102704.47513279459
+        },
+        "MONTHS_BALANCE": {
+            "dtype": "int64",
+            "min": -96.0,
+            "max": -1.0,
+            "mean": -34.52192061478338,
+            "std": 26.667750992609317
+        },
+        "AMT_BALANCE": {
+            "dtype": "float64",
+            "min": -420250.185,
+            "max": 1505902.185,
+            "mean": 58300.15526185763,
+            "std": 106307.03102454545
+        },
+        "AMT_CREDIT_LIMIT_ACTUAL": {
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 1350000.0,
+            "mean": 153807.95740033622,
+            "std": 165145.69952323468
+        },
+        "AMT_DRAWINGS_ATM_CURRENT": {
+            "dtype": "float64",
+            "min": -6827.31,
+            "max": 2115000.0,
+            "mean": 4797.383784774519,
+            "std": 25430.704369640254
+        },
+        "AMT_DRAWINGS_CURRENT": {
+            "dtype": "float64",
+            "min": -6211.62,
+            "max": 2287098.315,
+            "mean": 7433.388179202628,
+            "std": 33846.07733350391
+        },
+        "AMT_DRAWINGS_OTHER_CURRENT": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 1529847.0,
+            "mean": 231.90484049342865,
+            "std": 7358.72129876501
+        },
+        "AMT_DRAWINGS_POS_CURRENT": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 2239274.16,
+            "mean": 2389.1495030989668,
+            "std": 18693.53495566176
+        },
+        "AMT_INST_MIN_REGULARITY": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 202882.005,
+            "mean": 3258.821327489798,
+            "std": 5457.655788718392
+        },
+        "AMT_PAYMENT_CURRENT": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 4289207.445,
+            "mean": 8765.116970277415,
+            "std": 32411.646596013914
+        },
+        "AMT_PAYMENT_TOTAL_CURRENT": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 4278315.69,
+            "mean": 7588.856739464137,
+            "std": 32005.987767685918
+        },
+        "AMT_RECEIVABLE_PRINCIPAL": {
+            "dtype": "float64",
+            "min": -423305.82,
+            "max": 1472316.795,
+            "mean": 55965.87690549753,
+            "std": 102533.61684328642
+        },
+        "AMT_RECIVABLE": {
+            "dtype": "float64",
+            "min": -420250.185,
+            "max": 1493338.185,
+            "mean": 58088.81117667393,
+            "std": 105965.3699083036
+        },
+        "AMT_TOTAL_RECEIVABLE": {
+            "dtype": "float64",
+            "min": -420250.185,
+            "max": 1493338.185,
+            "mean": 58098.28548873764,
+            "std": 105971.8011030385
+        },
+        "CNT_DRAWINGS_ATM_CURRENT": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 51.0,
+            "mean": 0.24902950593597603,
+            "std": 0.9947389794139394
+        },
+        "CNT_DRAWINGS_CURRENT": {
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 165.0,
+            "mean": 0.7031439112238798,
+            "std": 3.190346795177138
+        },
+        "CNT_DRAWINGS_OTHER_CURRENT": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 12.0,
+            "mean": 0.003872862413262256,
+            "std": 0.07415792657629691
+        },
+        "CNT_DRAWINGS_POS_CURRENT": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 165.0,
+            "mean": 0.4502415428746414,
+            "std": 2.9155659869278923
+        },
+        "CNT_INSTALMENT_MATURE_CUM": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 120.0,
+            "mean": 20.36209401736109,
+            "std": 19.302544762708955
+        },
+        "NAME_CONTRACT_STATUS": {
+            "dtype": "category",
+            "categories": [
+                "Active",
+                "Completed",
+                "Demand",
+                "Signed",
+                "Sent proposal",
+                "Refused",
+                "Approved"
+            ]
+        },
+        "SK_DPD": {
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 3260.0,
+            "mean": 9.283667316613858,
+            "std": 97.51570008767084
+        },
+        "SK_DPD_DEF": {
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 3260.0,
+            "mean": 0.3316220140446922,
+            "std": 21.479231470272804
+        }
+    },
+    "pos_cash_balance_data": {
+        "SK_ID_PREV": {
+            "dtype": "int64",
+            "min": 1000001.0,
+            "max": 2843499.0,
+            "mean": 1903216.5989568618,
+            "std": 535846.5307218095
+        },
+        "SK_ID_CURR": {
+            "dtype": "int64",
+            "min": 100001.0,
+            "max": 456255.0,
+            "mean": 278403.8633055631,
+            "std": 102763.74508967654
+        },
+        "MONTHS_BALANCE": {
+            "dtype": "int64",
+            "min": -96.0,
+            "max": -1.0,
+            "mean": -35.012587990550884,
+            "std": 26.066569967493336
+        },
+        "CNT_INSTALMENT": {
+            "dtype": "Int64",
+            "min": 1.0,
+            "max": 92.0,
+            "mean": 17.076383027184907,
+            "std": 11.982222510690232
+        },
+        "CNT_INSTALMENT_FUTURE": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 85.0,
+            "mean": 10.47475332849799,
+            "std": 11.095982992562028
+        },
+        "NAME_CONTRACT_STATUS": {
+            "dtype": "category",
+            "categories": [
+                "Active",
+                "Completed",
+                "Signed",
+                "Approved",
+                "Returned to the store",
+                "Demand",
+                "Canceled",
+                "XNA",
+                "Amortized debt"
+            ]
+        },
+        "SK_DPD": {
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 4231.0,
+            "mean": 11.606928279139693,
+            "std": 132.71404349209618
+        },
+        "SK_DPD_DEF": {
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 3595.0,
+            "mean": 0.654468423188131,
+            "std": 32.7624905433615
+        }
+    },
+    "installments_payments_data": {
+        "SK_ID_PREV": {
+            "dtype": "int64",
+            "min": 1000001.0,
+            "max": 2843499.0,
+            "mean": 1903364.9695492988,
+            "std": 536202.9055458903
+        },
+        "SK_ID_CURR": {
+            "dtype": "int64",
+            "min": 100001.0,
+            "max": 456255.0,
+            "mean": 278444.88173821557,
+            "std": 102718.3104114916
+        },
+        "NUM_INSTALMENT_VERSION": {
+            "dtype": "Int64",
+            "min": 0.0,
+            "max": 178.0,
+            "mean": 0.8566373016127933,
+            "std": 1.035215735775109
+        },
+        "NUM_INSTALMENT_NUMBER": {
+            "dtype": "int64",
+            "min": 1.0,
+            "max": 277.0,
+            "mean": 18.87089583026623,
+            "std": 26.66406689703415
+        },
+        "DAYS_INSTALMENT": {
+            "dtype": "Int64",
+            "min": -2922.0,
+            "max": -1.0,
+            "mean": -1042.2699916011295,
+            "std": 800.9462842777965
+        },
+        "DAYS_ENTRY_PAYMENT": {
+            "dtype": "Int64",
+            "min": -4921.0,
+            "max": -1.0,
+            "mean": -1051.0658317237396,
+            "std": 800.5071059960004
+        },
+        "AMT_INSTALMENT": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 3771487.845,
+            "mean": 17050.906988971146,
+            "std": 50570.254428747074
+        },
+        "AMT_PAYMENT": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 3771487.845,
+            "mean": 17236.277521015,
+            "std": 54730.10207702176
+        }
+    },
+    "previous_application_data": {
+        "SK_ID_PREV": {
+            "dtype": "int64",
+            "min": 1000001.0,
+            "max": 2845382.0,
+            "mean": 1923089.1353305625,
+            "std": 532597.9586955433
+        },
+        "SK_ID_CURR": {
+            "dtype": "int64",
+            "min": 100001.0,
+            "max": 456255.0,
+            "mean": 278357.1740986484,
+            "std": 102814.8238485575
+        },
+        "NAME_CONTRACT_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Consumer loans",
+                "Cash loans",
+                "Revolving loans"
+            ]
+        },
+        "AMT_ANNUITY": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 418058.145,
+            "mean": 14906.506177313206,
+            "std": 13177.514096551904
+        },
+        "AMT_APPLICATION": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 6905160.0,
+            "mean": 175233.86036042986,
+            "std": 292779.76238721795
+        },
+        "AMT_CREDIT": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 6905160.0,
+            "mean": 196113.95202144454,
+            "std": 318574.5337286762
+        },
+        "AMT_GOODS_PRICE": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 6905160.0,
+            "mean": 201181.53520928154,
+            "std": 280862.85715999926
+        },
+        "WEEKDAY_APPR_PROCESS_START": {
+            "dtype": "category",
+            "categories": [
+                "SATURDAY",
+                "THURSDAY",
+                "TUESDAY",
+                "MONDAY",
+                "FRIDAY",
+                "SUNDAY",
+                "WEDNESDAY"
+            ]
+        },
+        "HOUR_APPR_PROCESS_START": {
+            "dtype": "int64",
+            "min": 0.0,
+            "max": 23.0,
+            "mean": 12.484181667738385,
+            "std": 3.3340279649257907
+        },
+        "FLAG_LAST_APPL_PER_CONTRACT": {
+            "dtype": "category",
+            "categories": [
+                "Y",
+                "N"
+            ]
+        },
+        "NFLAG_LAST_APPL_IN_DAY": {
+            "dtype": "category",
+            "categories": [
+                1,
+                0
+            ]
+        },
+        "NAME_CASH_LOAN_PURPOSE": {
+            "dtype": "category",
+            "categories": [
+                "XAP",
+                "Repairs",
+                "Everyday expenses",
+                "Car repairs",
+                "Building a house or an annex",
+                "Other",
+                "Journey",
+                "Purchase of electronic equipment",
+                "Medicine",
+                "Payments on other loans",
+                "Urgent needs",
+                "Buying a used car",
+                "Buying a new car",
+                "Buying a holiday home / land",
+                "Education",
+                "Buying a home",
+                "Furniture",
+                "Buying a garage",
+                "Business development",
+                "Wedding / gift / holiday",
+                "Hobby",
+                "Gasification / water supply",
+                "Refusal to name the goal",
+                "Money for a third person"
+            ]
+        },
+        "NAME_CONTRACT_STATUS": {
+            "dtype": "category",
+            "categories": [
+                "Approved",
+                "Refused",
+                "Canceled",
+                "Unused offer"
+            ]
+        },
+        "DAYS_DECISION": {
+            "dtype": "int64",
+            "min": -2922.0,
+            "max": -1.0,
+            "mean": -880.6796679946402,
+            "std": 779.0996667604196
+        },
+        "NAME_PAYMENT_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Cash through the bank",
+                "Non-cash from your account",
+                "Cashless from the account of the employer"
+            ]
+        },
+        "CODE_REJECT_REASON": {
+            "dtype": "category",
+            "categories": [
+                "XAP",
+                "HC",
+                "LIMIT",
+                "CLIENT",
+                "SCOFR",
+                "SCO",
+                "VERIF",
+                "SYSTEM"
+            ]
+        },
+        "NAME_TYPE_SUITE": {
+            "dtype": "category",
+            "categories": [
+                "Unaccompanied",
+                "Spouse, partner",
+                "Family",
+                "Children",
+                "Other_B",
+                "Other_A",
+                "Group of people"
+            ]
+        },
+        "NAME_CLIENT_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Repeater",
+                "New",
+                "Refreshed"
+            ]
+        },
+        "NAME_PORTFOLIO": {
+            "dtype": "category",
+            "categories": [
+                "POS",
+                "Cash",
+                "Cards",
+                "Cars"
+            ]
+        },
+        "CHANNEL_TYPE": {
+            "dtype": "category",
+            "categories": [
+                "Country-wide",
+                "Contact center",
+                "Credit and cash offices",
+                "Stone",
+                "Regional / Local",
+                "AP+ (Cash loan)",
+                "Channel of corporate sales",
+                "Car dealer"
+            ]
+        },
+        "SELLERPLACE_AREA": {
+            "dtype": "int64",
+            "min": -1.0,
+            "max": 4000000.0,
+            "mean": 313.95111524630977,
+            "std": 7127.443459167593
+        },
+        "CNT_PAYMENT": {
+            "dtype": "float64",
+            "min": 0.0,
+            "max": 84.0,
+            "mean": 15.150574118047148,
+            "std": 12.95219811654472
+        },
+        "NAME_YIELD_GROUP": {
+            "dtype": "category",
+            "categories": [
+                "middle",
+                "low_action",
+                "high",
+                "low_normal"
+            ]
+        },
+        "PRODUCT_COMBINATION": {
+            "dtype": "category",
+            "categories": [
+                "POS mobile with interest",
+                "Cash X-Sell: low",
+                "Cash X-Sell: high",
+                "Cash X-Sell: middle",
+                "Cash Street: high",
+                "Cash",
+                "POS household without interest",
+                "POS household with interest",
+                "POS other with interest",
+                "Card X-Sell",
+                "POS mobile without interest",
+                "Card Street",
+                "POS industry with interest",
+                "Cash Street: low",
+                "POS industry without interest",
+                "Cash Street: middle",
+                "POS others without interest"
+            ]
+        },
+        "DAYS_FIRST_DRAWING": {
+            "dtype": "float64",
+            "min": -2922.0,
+            "max": 365243.0,
+            "mean": 351491.7816142123,
+            "std": 69625.50553012826
+        },
+        "DAYS_FIRST_DUE": {
+            "dtype": "float64",
+            "min": -2892.0,
+            "max": 365243.0,
+            "mean": 7919.663964018982,
+            "std": 56435.75431382004
+        },
+        "DAYS_LAST_DUE_1ST_VERSION": {
+            "dtype": "float64",
+            "min": -2801.0,
+            "max": 365243.0,
+            "mean": 20014.51650207698,
+            "std": 84245.1243558346
+        },
+        "DAYS_LAST_DUE": {
+            "dtype": "float64",
+            "min": -2889.0,
+            "max": 365243.0,
+            "mean": 45504.72617760359,
+            "std": 121658.17072059502
+        },
+        "DAYS_TERMINATION": {
+            "dtype": "float64",
+            "min": -2874.0,
+            "max": 365243.0,
+            "mean": 48749.87530400296,
+            "std": 125172.93697577942
+        },
+        "NFLAG_INSURED_ON_APPROVAL": {
+            "dtype": "category",
+            "categories": [
+                0.0,
+                1.0
+            ]
+        }
+    }
+}
