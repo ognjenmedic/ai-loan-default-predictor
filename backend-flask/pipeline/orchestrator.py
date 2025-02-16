@@ -163,15 +163,33 @@ def process_installments_payments_data(payload):
     if "installments_payments_data" in payload:
         df_inst = pd.DataFrame(payload["installments_payments_data"])
 
-        # Force categories
+        # 1) Print dtypes before forcing categories
+        print("\n[DEBUG] (Before categoricals) df_inst dtypes:")
+        print(df_inst.dtypes)
+        print(df_inst.head(3))
+
+        # 2) Force categories
         df_inst = force_categorical_dtypes(df_inst, "installments_payments_data")
         
-        # This function replicates entire EDA logic:
+        # 3) Cast certain columns back to numeric if needed
+        #    so the aggregator will produce mean, sum, min, max columns.
+        numeric_cols = ["NUM_INSTALMENT_VERSION", "NUM_INSTALMENT_NUMBER",
+                        "AMT_INSTALMENT", "AMT_PAYMENT"]
+        for col in numeric_cols:
+            if col in df_inst.columns:
+                df_inst[col] = pd.to_numeric(df_inst[col], errors="coerce")
+
+        # Make sure SK_ID_CURR is also numeric (int) to match merges
+        if "SK_ID_CURR" in df_inst.columns:
+            df_inst["SK_ID_CURR"] = pd.to_numeric(df_inst["SK_ID_CURR"], errors="coerce")
+
+        # 4) Now pass to your aggregator function
         final_installments_feats = generate_installments_features(df_inst)
-        
-        # Return the aggregated + merged features with SK_ID_CURR
         return final_installments_feats
+
     return None
+
+
 
 # -----------------------------------
 # Merge Helper

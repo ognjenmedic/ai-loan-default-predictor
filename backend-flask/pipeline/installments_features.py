@@ -149,6 +149,12 @@ def generate_installments_features(df_installments_payments):
     # B) Numeric aggregator => "installments_agg_*"
     df_numeric_agg = compute_numeric_aggregates(df_temp)
 
+   # 🟡 Debug print aggregator columns
+    print("\n[DEBUG] numeric_agg columns:")
+    print(df_numeric_agg.columns)
+    print(df_numeric_agg.head(3))
+
+
     # C) Custom aggregator DataFrames
     df_credit_activity = compute_installments_credit_activity(df_temp)
     df_loan_amount = compute_installments_loan_amount(df_temp)

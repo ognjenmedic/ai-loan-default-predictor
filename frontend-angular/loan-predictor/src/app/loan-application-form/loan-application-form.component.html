@@ -1,0 +1,83 @@
+<div class="container">
+  <h2>AI Loan Default Predictor</h2>
+
+  <!-- Loan Form -->
+  <form (ngSubmit)="predictLoan()">
+    <!-- Occupation Type -->
+    <label for="occupation">Occupation Type:</label>
+    <select
+      id="occupation"
+      [(ngModel)]="formData.OCCUPATION_TYPE"
+      name="occupation"
+      required
+    >
+      <option *ngFor="let occupation of occupations" [value]="occupation">
+        {{ occupation }}
+      </option>
+    </select>
+
+    <!-- Annual Income -->
+    <label for="income">Annual Income:</label>
+    <input
+      id="income"
+      type="number"
+      [(ngModel)]="formData.AMT_INCOME_TOTAL"
+      name="income"
+      required
+    />
+
+    <!-- Loan Amount -->
+    <label for="loanAmount">Loan Amount:</label>
+    <input
+      id="loanAmount"
+      type="number"
+      [(ngModel)]="formData.AMT_CREDIT"
+      name="loanAmount"
+      required
+    />
+
+    <!-- Loan Term -->
+    <label for="loanTerm">Loan Term (Months):</label>
+    <input
+      id="loanTerm"
+      type="number"
+      [(ngModel)]="formData.loanTermMonths"
+      name="loanTerm"
+      required
+    />
+
+    <!-- External Credit Score -->
+    <label for="creditScore">External Credit Score:</label>
+    <input
+      id="creditScore"
+      type="number"
+      step="0.01"
+      [(ngModel)]="formData.EXT_SOURCE_2"
+      name="creditScore"
+      required
+    />
+
+    <!-- Buttons -->
+    <button type="button" (click)="generateDummyData()">
+      Generate Test Data
+    </button>
+    <button type="submit">Predict</button>
+  </form>
+
+  <!-- Prediction Result -->
+  <div *ngIf="predictionResult">
+    <h3>Prediction Result</h3>
+    <p>
+      <strong>Default Probability:</strong>
+      {{ predictionResult.formatted_probability }}
+    </p>
+    <p>
+      <strong>Prediction:</strong>
+      {{
+        predictionResult.prediction === 1
+          ? "High Risk (Default Likely)"
+          : "Low Risk (Default Unlikely)"
+      }}
+    </p>
+  </div>
+</div>
