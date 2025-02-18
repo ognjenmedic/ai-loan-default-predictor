@@ -114,3 +114,69 @@ def aggregate_bureau_balance_features(df_bureau_balance, additional_feature_dfs)
         print(inf_values)
     
     return df_aggregated
+
+
+def final_aggregate_bureau_balance_by_sk_id_curr(df_bureau_balance_aggregated_with_curr):
+    """
+    1. Takes a DataFrame keyed by SK_ID_BUREAU but already containing SK_ID_CURR.
+    2. Aggregates to a single row per SK_ID_CURR using min, max, mean, sum, etc.
+    3. Returns a DataFrame keyed by SK_ID_CURR.
+    """
+    print("Before final aggregation:")
+    print("Unique SK_ID_CURR:", df_bureau_balance_aggregated_with_curr['SK_ID_CURR'].nunique())
+    print("Total rows:", df_bureau_balance_aggregated_with_curr.shape[0])
+    
+    # Example: convert columns that should be numeric
+    cols_to_convert = ['bureau_balance_MAX_OVERDUE_STATUS']  # if you have a column like this
+    for col in cols_to_convert:
+        if col in df_bureau_balance_aggregated_with_curr.columns:
+            df_bureau_balance_aggregated_with_curr[col] = pd.to_numeric(
+                df_bureau_balance_aggregated_with_curr[col], errors='coerce'
+            )
+
+    # Define your final aggregation dictionary (adjust as needed):
+    agg_dict_final = {
+        # EXAMPLE: aggregated columns from the SK_ID_BUREAU-level step
+        'bureau_balance_agg_MONTHS_BALANCE_mean': ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_agg_MONTHS_BALANCE_sum':  ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_agg_MONTHS_BALANCE_max':  ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_agg_MONTHS_BALANCE_min':  ['min', 'max', 'mean', 'sum'],
+        
+        # If you have categorical columns aggregated at SK_ID_BUREAU level:
+        'bureau_balance_agg_STATUS_most_frequent': lambda x: x.mode().iloc[0] if not x.mode().empty else x.iloc[0],
+
+        # Example numeric columns from earlier feature engineering
+        'bureau_balance_NUM_MONTHS':              ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_NUM_CLOSED_MONTHS':       ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_NUM_ACTIVE_MONTHS':       ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_TOTAL_OVERDUE_MONTHS':    ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_OLDEST_RECORD':           ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_MOST_RECENT_RECORD':      ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_CREDIT_HISTORY_LENGTH':   ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_RECENT_OVERDUE_MONTHS':   ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_MAX_OVERDUE_STATUS':      ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_PERCENT_CLOSED':          ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_PERCENT_ACTIVE':          ['min', 'max', 'mean', 'sum'],
+        'bureau_balance_MOST_COMMON_STATUS':      lambda x: x.mode().iloc[0] if not x.mode().empty else x.iloc[0],
+    }
+
+    # Drop SK_ID_BUREAU, since we only need to group by SK_ID_CURR now
+    df_temp = df_bureau_balance_aggregated_with_curr.drop('SK_ID_BUREAU', axis=1)
+
+    # Group by SK_ID_CURR
+    df_bureau_balance_aggregated_with_curr_final = df_temp.groupby('SK_ID_CURR', as_index=False).agg(agg_dict_final)
+
+    # Flatten multi-index columns
+    df_bureau_balance_aggregated_with_curr_final.columns = [
+        '_'.join(col).strip('_') if isinstance(col, tuple) else col
+        for col in df_bureau_balance_aggregated_with_curr_final.columns
+    ]
+
+    # Ensure SK_ID_CURR is integer
+    df_bureau_balance_aggregated_with_curr_final['SK_ID_CURR'] = df_bureau_balance_aggregated_with_curr_final['SK_ID_CURR'].astype('int64')
+
+    print("\nAfter final aggregation:")
+    print("Unique SK_ID_CURR:", df_bureau_balance_aggregated_with_curr_final['SK_ID_CURR'].nunique())
+    print("Total rows:", df_bureau_balance_aggregated_with_curr_final.shape[0])
+    
+    return df_bureau_balance_aggregated_with_curr_final

@@ -100,4 +100,8 @@ export class LoanApplicationFormComponent {
         }
       );
   }
+
+  getProbabilityNumber(): number {
+    return parseFloat(this.predictionResult.formatted_probability);
+  }
 }

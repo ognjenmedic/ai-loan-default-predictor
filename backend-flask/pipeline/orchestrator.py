@@ -58,29 +58,50 @@ def process_bureau_data(payload):
 # 3. Bureau Balance
 # -----------------------------------
 from pipeline.bureau_balance_features import generate_bureau_balance_features
-from pipeline.bureau_balance_aggregation import aggregate_bureau_balance_features
+from pipeline.bureau_balance_aggregation import (
+    aggregate_bureau_balance_features,
+    final_aggregate_bureau_balance_by_sk_id_curr
+)
 from pipeline.bureau_balance_mapping import map_bureau_balance_to_curr
 
 def process_bureau_balance_data(payload):
+    """
+    Orchestrates the entire bureau balance pipeline:
+      1) Feature engineering
+      2) Aggregation at SK_ID_BUREAU
+      3) Mapping SK_ID_BUREAU -> SK_ID_CURR
+      4) Final aggregation at SK_ID_CURR
+    """
     if "bureau_balance_data" in payload and "bureau_data" in payload:
         df_bureau_balance = pd.DataFrame(payload["bureau_balance_data"])
-        df_bureau = pd.DataFrame(payload["bureau_data"])  
+        df_bureau = pd.DataFrame(payload["bureau_data"])
 
-        # Force categories
-        df_bureau_balance = force_categorical_dtypes(df_bureau_balance, "bureau_balance_data")
-        
+        # 1) Feature engineering
         bureau_balance_engineered_feats = generate_bureau_balance_features(df_bureau_balance)
+
+        # 2) Initial aggregation at SK_ID_BUREAU
         aggregated_bureau_balance_feats = aggregate_bureau_balance_features(
             df_bureau_balance,
             additional_feature_dfs=[(bureau_balance_engineered_feats, "bureau_balance_engineered_features")]
         )
+
+        # 3) Map SK_ID_BUREAU -> SK_ID_CURR
         bureau_mapping = df_bureau[['SK_ID_BUREAU', 'SK_ID_CURR']].drop_duplicates()
         aggregated_bureau_balance_feats_with_curr = map_bureau_balance_to_curr(
             aggregated_bureau_balance_feats,
             bureau_mapping
         )
-        return aggregated_bureau_balance_feats_with_curr
+
+        # 4) Final aggregation at SK_ID_CURR
+        df_bureau_balance_aggregated_with_curr_final = final_aggregate_bureau_balance_by_sk_id_curr(
+            aggregated_bureau_balance_feats_with_curr
+        )
+
+        return df_bureau_balance_aggregated_with_curr_final
+
+    # If "bureau_balance_data" or "bureau_data" not in payload, return None
     return None
+
 
 # -----------------------------------
 # 4. Credit Card Balance

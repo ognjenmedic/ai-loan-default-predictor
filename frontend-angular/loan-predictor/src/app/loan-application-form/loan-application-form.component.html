@@ -1,83 +1,105 @@
-<div class="container">
-  <h2>AI Loan Default Predictor</h2>
+<div class="ai-loan-container">
+  <h2 class="ai-loan-title">AI Loan Default Predictor</h2>
 
-  <!-- Loan Form -->
-  <form (ngSubmit)="predictLoan()">
-    <!-- Occupation Type -->
-    <label for="occupation">Occupation Type:</label>
-    <select
-      id="occupation"
-      [(ngModel)]="formData.OCCUPATION_TYPE"
-      name="occupation"
-      required
-    >
-      <option *ngFor="let occupation of occupations" [value]="occupation">
-        {{ occupation }}
-      </option>
-    </select>
+  <div class="ai-loan-content">
+    <!-- Loan Form -->
+    <form class="ai-loan-form" (ngSubmit)="predictLoan()">
+      <div class="form-field dropdown-container">
+        <label for="occupation">Occupation Type:</label>
+        <div class="custom-select-wrapper">
+          <select
+            id="occupation"
+            [(ngModel)]="formData.OCCUPATION_TYPE"
+            name="occupation"
+            required
+          >
+            <option *ngFor="let occupation of occupations" [value]="occupation">
+              {{ occupation }}
+            </option>
+          </select>
+        </div>
+      </div>
 
-    <!-- Annual Income -->
-    <label for="income">Annual Income:</label>
-    <input
-      id="income"
-      type="number"
-      [(ngModel)]="formData.AMT_INCOME_TOTAL"
-      name="income"
-      required
-    />
+      <div class="form-field">
+        <label for="income">Annual Income:</label>
+        <input
+          id="income"
+          type="number"
+          [(ngModel)]="formData.AMT_INCOME_TOTAL"
+          name="income"
+          required
+        />
+      </div>
 
-    <!-- Loan Amount -->
-    <label for="loanAmount">Loan Amount:</label>
-    <input
-      id="loanAmount"
-      type="number"
-      [(ngModel)]="formData.AMT_CREDIT"
-      name="loanAmount"
-      required
-    />
+      <div class="form-field">
+        <label for="loanAmount">Loan Amount:</label>
+        <input
+          id="loanAmount"
+          type="number"
+          [(ngModel)]="formData.AMT_CREDIT"
+          name="loanAmount"
+          required
+        />
+      </div>
 
-    <!-- Loan Term -->
-    <label for="loanTerm">Loan Term (Months):</label>
-    <input
-      id="loanTerm"
-      type="number"
-      [(ngModel)]="formData.loanTermMonths"
-      name="loanTerm"
-      required
-    />
+      <div class="form-field">
+        <label for="loanTerm">Loan Term (Months):</label>
+        <input
+          id="loanTerm"
+          type="number"
+          [(ngModel)]="formData.loanTermMonths"
+          name="loanTerm"
+          required
+        />
+      </div>
 
-    <!-- External Credit Score -->
-    <label for="creditScore">External Credit Score:</label>
-    <input
-      id="creditScore"
-      type="number"
-      step="0.01"
-      [(ngModel)]="formData.EXT_SOURCE_2"
-      name="creditScore"
-      required
-    />
+      <div class="form-field">
+        <label for="creditScore">External Credit Score:</label>
+        <input
+          id="creditScore"
+          type="number"
+          step="0.01"
+          [(ngModel)]="formData.EXT_SOURCE_2"
+          name="creditScore"
+          required
+        />
+      </div>
 
-    <!-- Buttons -->
-    <button type="button" (click)="generateDummyData()">
-      Generate Test Data
-    </button>
-    <button type="submit">Predict</button>
-  </form>
+      <div class="ai-loan-buttons">
+        <button
+          type="button"
+          class="btn-secondary"
+          (click)="generateDummyData()"
+        >
+          Generate Test Data
+        </button>
+        <button type="submit" class="btn-primary">Predict Default</button>
+      </div>
+    </form>
 
-  <!-- Prediction Result -->
-  <div *ngIf="predictionResult">
-    <h3>Prediction Result</h3>
-    <p>
-      <strong>Default Probability:</strong>
-      {{ predictionResult.formatted_probability }}
-    </p>
-    <p>
-      <strong>Prediction:</strong>
-      {{
-        predictionResult.prediction === 1
-          ? "High Risk (Default Likely)"
-          : "Low Risk (Default Unlikely)"
-      }}
-    </p>
+    <!-- Prediction Result -->
+    <div class="prediction-output" *ngIf="predictionResult">
+      <h3 class="prediction-title">Prediction Result</h3>
+      <p>
+        <strong>Default Probability:</strong>
+        <span
+          [ngClass]="{
+            'high-risk': getProbabilityNumber() > 50,
+            'low-risk': getProbabilityNumber() <= 50
+          }"
+        >
+          {{ predictionResult.formatted_probability }}
+        </span>
+      </p>
+
+      <p>
+        <strong>Prediction:</strong>
+        {{
+          predictionResult.prediction === 1
+            ? "High Risk (Default Likely)"
+            : "Low Risk (Default Unlikely)"
+        }}
+      </p>
+    </div>
   </div>
 </div>

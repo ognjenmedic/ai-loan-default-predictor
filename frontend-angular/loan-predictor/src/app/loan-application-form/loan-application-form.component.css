@@ -1,0 +1,158 @@
+body {
+  background-color: #1f2937; /* Dark background */
+  font-family: "Inter", sans-serif;
+  color: #ffffff;
+}
+
+.ai-loan-container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 25px;
+  background-color: #2d3748; /* Slightly lighter dark background */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.ai-loan-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.ai-loan-content {
+  max-width: 700px; /* Same as .ai-loan-form */
+  margin: 0 auto; /* Center everything */
+}
+
+.ai-loan-form {
+  width: 100%; /* Ensure it doesn't exceed the parent */
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Custom left-aligned dropdown arrow */
+.custom-select-wrapper::before {
+  content: "▽"; /* Unicode for dropdown arrow */
+  font-size: 16px;
+  color: #ffffff;
+  position: absolute;
+  right: 10px; /* Moves arrow to the left */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Prevents interfering with select */
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #374151;
+  color: #ffffff;
+  border: 1px solid #4a5568;
+  border-radius: 5px;
+  appearance: none; /* Removes default browser styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-left: 35px; /* Adds space for the custom arrow */
+}
+
+label {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+input,
+select {
+  /* width: 100%; */
+  max-width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #374151;
+  color: #ffffff;
+  border: 1px solid #6b7280;
+  border-radius: 5px;
+}
+
+input:focus,
+select:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+.ai-loan-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+.btn-primary {
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  /* background-color: #4caf50; */
+  background-color: #38a169;
+
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #388e3c;
+}
+
+.btn-secondary {
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #4b5563;
+}
+
+.prediction-output {
+  max-width: 100%; /* Ensure alignment */
+  margin: 20px auto; /* Keep it centered */
+  padding: 15px;
+  background-color: #2d3748;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.prediction-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.high-risk {
+  color: #e53e3e; /* Bright Red for High Risk */
+  font-weight: bold;
+}
+
+.low-risk {
+  color: #388e3c; /* Green for Low Risk */
+  font-weight: bold;
+}

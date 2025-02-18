@@ -14,7 +14,7 @@ def compute_bureau_balance_credit_activity(df_bureau_balance):
         bureau_balance_NUM_MONTHS=("MONTHS_BALANCE", "count"),
         bureau_balance_NUM_CLOSED_MONTHS=("STATUS", lambda x: (x == "C").sum()),
         bureau_balance_NUM_ACTIVE_MONTHS=("STATUS", lambda x: (x == "0").sum()),
-        bureau_balance_NUM_OVERDUE_MONTHS=("STATUS", lambda x: x.isin(["1", "2", "3", "4", "5"]).sum()),
+        bureau_balance_TOTAL_OVERDUE_MONTHS=("STATUS", lambda x: x.isin(["1", "2", "3", "4", "5"]).sum()),
     ).reset_index()
     return bureau_balance_credit_activity
 
@@ -47,7 +47,7 @@ def compute_bureau_balance_overdue_features(df_bureau_balance):
     df_tmp["STATUS"] = pd.Categorical(df_tmp["STATUS"], categories=status_order, ordered=True)
     
     bureau_balance_overdue_features = df_tmp.groupby("SK_ID_BUREAU").agg(
-        bureau_balance_NUM_OVERDUE_MONTHS=("STATUS", lambda x: x.isin(["1", "2", "3", "4", "5"]).sum()),
+        bureau_balance_RECENT_OVERDUE_MONTHS=("STATUS", lambda x: x.isin(["1", "2", "3", "4", "5"]).sum()),
         bureau_balance_MAX_OVERDUE_STATUS=("STATUS", 
             lambda x: x[x.isin(["1", "2", "3", "4", "5"])].max() if x.isin(["1", "2", "3", "4", "5"]).any() else "0")
     ).reset_index()
