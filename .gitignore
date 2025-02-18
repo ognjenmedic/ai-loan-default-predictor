@@ -20,7 +20,7 @@ logs/
 *.log
 
 # Model files and large data files
-*.pkl
+# *.pkl
 *.h5
 *.pt
 *.ckpt
