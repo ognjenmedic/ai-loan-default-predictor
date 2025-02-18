@@ -11,7 +11,7 @@ RUN npm install
 COPY . .
 
 # Build Angular app
-RUN node --max_old_space_size=256 node_modules/@angular/cli/bin/ng build --configuration=production
+RUN npm run build --configuration=production --optimization=false --aot=false
 
 # Use a lightweight web server to serve Angular
 FROM node:18-alpine
