@@ -3,6 +3,9 @@
 # ----------------------------
     FROM node:18-alpine AS build
 
+    # Set non-interactive mode for npm/Angular
+    ENV CI=true
+    
     # Create app directory
     WORKDIR /app
     
@@ -13,7 +16,7 @@
     # Copy the rest of your Angular code
     COPY . .
     
-    # Build the Angular app
+    # Build the Angular app (standard SPA build, not SSR)
     RUN npm run build -- --configuration production
     
     
@@ -22,7 +25,6 @@
     # ----------------------------
     FROM node:18-alpine
     
-    # Create app directory
     WORKDIR /app
     
     # Copy the built files from the build stage.
