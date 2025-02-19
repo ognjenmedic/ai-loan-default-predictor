@@ -1,23 +1,24 @@
-# Use a lightweight Python image
+# ----------------------------
+#  FLASK BACKEND DOCKERFILE
+# ----------------------------
+
+# 1) Use a lightweight Python image
 FROM python:3.9-slim
 
-# Set working directory
+# 2) Set working directory
 WORKDIR /app
 
-# Copy dependencies
+# 3) Copy requirements and install
 COPY requirements.txt .
-
-# Install dependencies
 RUN pip install --upgrade pip \
     && pip install gunicorn \
     && pip install --no-cache-dir -r requirements.txt
 
-
-# Copy application code
+# 4) Copy your application code
 COPY . .
 
-# Expose Flask port
+# 5) Expose the Flask port
 EXPOSE 5001
 
-# Start Flask app
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5001", "app:app"]
+# 6) Start Flask app
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5001", "loan_predictor:app"]
