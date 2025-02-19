@@ -1,41 +1,37 @@
-# ----------------------------
-# 1) BUILD STAGE
-# ----------------------------
-    FROM node:18-alpine AS build
-
-    # Set non-interactive mode for npm/Angular
-    ENV CI=true
-    
-    # Create app directory
-    WORKDIR /app
+# ---------------------------------------
+# 1) BUILD STAGE - Build Angular App
+# ---------------------------------------
+    FROM node:18 AS build
+    WORKDIR /usr/src/app
     
     # Copy package files and install dependencies
-    COPY package*.json ./
-    RUN npm install
+    COPY package.json package-lock.json ./
+    RUN npm ci
     
-    # Copy the rest of your Angular code
+    # Copy the entire Angular project
     COPY . .
     
-    # Build the Angular app (standard SPA build, not SSR)
+    # Build the Angular app in production mode
     RUN npm run build -- --configuration production
     
+    # ---------------------------------------
+    # 2) SERVE STAGE - Serve with Nginx
+    # ---------------------------------------
+    FROM nginx:alpine
+    WORKDIR /usr/share/nginx/html
     
-    # ----------------------------
-    # 2) SERVE STAGE
-    # ----------------------------
-    FROM node:18-alpine
+    # Remove default Nginx static content
+    RUN rm -rf ./*
     
-    WORKDIR /app
+    # Copy Angular build output to Nginx HTML directory
+    COPY --from=build /usr/src/app/dist/loan-predictor /usr/share/nginx/html
     
-    # Copy the built files from the build stage.
-    COPY --from=build /app/dist/loan-predictor /app/dist
-    
-    # Install http-server globally
-    RUN npm install -g http-server
+    # Copy custom Nginx config (if needed)
+    COPY nginx.conf /etc/nginx/conf.d/default.conf
     
     # Expose port 80
     EXPOSE 80
     
-    # Run http-server at container start
-    CMD ["http-server", "/app/dist", "-p", "80"]
+    # Start Nginx
+    CMD ["nginx", "-g", "daemon off;"]
     
