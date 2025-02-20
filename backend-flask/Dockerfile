@@ -8,6 +8,11 @@ FROM python:3.9-slim
 # 2) Set working directory
 WORKDIR /app
 
+
+# Install system dependencies (adds libgomp1 to fix LightGBM issue)
+RUN apt-get update && apt-get install -y libgomp1 && rm -rf /var/lib/apt/lists/*
+
+
 # 3) Copy requirements and install
 COPY requirements.txt .
 RUN pip install --upgrade pip \
