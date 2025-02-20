@@ -17,29 +17,45 @@
               {{ occupation }}
             </option>
           </select>
+
+          <!-- Inline SVG for Google "keyboard_arrow_down" icon -->
+          <svg
+            class="custom-dropdown-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 96 960 960"
+            width="24"
+          >
+            <path fill="white" d="M480 696 280 496h400L480 696Z" />
+          </svg>
         </div>
       </div>
 
       <div class="form-field">
-        <label for="income">Annual Income:</label>
+        <label for="income">Monthly Income (USD):</label>
         <input
           id="income"
-          type="number"
-          [(ngModel)]="formData.AMT_INCOME_TOTAL"
+          type="text"
+          [value]="formData.AMT_INCOME_TOTAL | number : '1.0-0'"
+          (input)="updateNumber($event, 'AMT_INCOME_TOTAL')"
           name="income"
           required
         />
       </div>
 
       <div class="form-field">
-        <label for="loanAmount">Loan Amount:</label>
+        <label for="loanAmount">Loan Amount (USD):</label>
         <input
           id="loanAmount"
-          type="number"
-          [(ngModel)]="formData.AMT_CREDIT"
+          type="text"
+          [value]="formData.AMT_CREDIT | number : '1.0-0'"
+          (input)="updateNumber($event, 'AMT_CREDIT')"
           name="loanAmount"
           required
         />
+      </div>
+      <div *ngIf="dtiWarning" class="dti-warning">
+        {{ dtiWarning }}
       </div>
 
       <div class="form-field">
@@ -73,14 +89,16 @@
         >
           Generate Test Data
         </button>
-        <button type="submit" class="btn-primary">Predict Default</button>
+        <button type="submit" class="btn-primary" [disabled]="isDTITooHigh()">
+          Predict Default
+        </button>
       </div>
     </form>
 
     <!-- Prediction Result -->
     <div class="prediction-output" *ngIf="predictionResult">
       <h3 class="prediction-title">Prediction Result</h3>
-      <p>
+      <p class="prediction-text">
         <strong>Default Probability:</strong>
         <span
           [ngClass]="{
@@ -92,7 +110,7 @@
         </span>
       </p>
 
-      <p>
+      <p class="prediction-text">
         <strong>Prediction:</strong>
         {{
           predictionResult.prediction === 1

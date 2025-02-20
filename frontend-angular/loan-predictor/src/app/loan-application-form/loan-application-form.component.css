@@ -40,16 +40,15 @@ body {
   width: 100%;
 }
 
-/* Custom left-aligned dropdown arrow */
-.custom-select-wrapper::before {
-  content: "▽"; /* Unicode for dropdown arrow */
-  font-size: 12px;
-  color: #ffffff;
+.custom-dropdown-icon {
   position: absolute;
-  right: 10px; /* Moves arrow to the left */
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none; /* Prevents interfering with select */
+  width: 18px; /* Adjust size */
+  height: 18px;
+  pointer-events: none; /* Prevent interference */
+  fill: #ffffff; /* Change color if needed */
 }
 
 select {
@@ -91,22 +90,29 @@ select:focus {
   outline: none;
 }
 
+.dti-warning {
+  color: #ff4141; /* Red warning text */
+  font-size: 13px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
 .ai-loan-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
-  margin-bottom: 40px;
+  margin-top: 25px;
+  margin-bottom: 30px;
 }
 
 .btn-primary {
+  font-family: "Inter", sans-serif;
   padding: 10px 15px;
   font-size: 13px;
-  font-weight: bold;
+  font-weight: 500;
   border-radius: 5px;
   cursor: pointer;
   /* background-color: #4caf50; */
   background-color: #38a169;
-
   color: white;
   border: none;
   transition: all 0.3s ease;
@@ -116,10 +122,17 @@ select:focus {
   background-color: #388e3c;
 }
 
+.btn-primary:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .btn-secondary {
+  font-family: "Inter", sans-serif;
   padding: 10px 15px;
   font-size: 13px;
-  font-weight: bold;
+  font-weight: 500;
   border-radius: 5px;
   cursor: pointer;
   background-color: #6b7280;
@@ -135,25 +148,29 @@ select:focus {
 .prediction-output {
   max-width: 100%; /* Ensure alignment */
   margin: 20px auto; /* Keep it centered */
-  padding: 15px;
+  padding: 13px;
   background-color: #2d3748;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .prediction-title {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
+.prediction-text {
+  font-size: 13px;
+}
+
 .high-risk {
-  color: #e53e3e; /* Bright Red for High Risk */
+  color: #ff4141; /* Bright Red for High Risk */
   font-weight: bold;
 }
 
 .low-risk {
-  color: #388e3c; /* Green for Low Risk */
+  color: #2fd57c; /* Green for Low Risk */
   font-weight: bold;
 }
 
@@ -161,10 +178,8 @@ select:focus {
   .ai-loan-buttons {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Adds spacing between buttons */
-    align-items: center; /* Centers buttons */
-    margin-top: 30px;
-    margin-bottom: 40px;
+    gap: 15px;
+    align-items: center;
   }
 
   .btn-primary,
