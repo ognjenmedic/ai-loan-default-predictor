@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-loan-application-form',
@@ -11,6 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./loan-application-form.component.css'],
 })
 export class LoanApplicationFormComponent {
+  private apiUrl = environment.apiUrl;
   dummyPayload: any = null;
   formData = {
     OCCUPATION_TYPE: '',
@@ -48,7 +50,7 @@ export class LoanApplicationFormComponent {
 
   generateDummyData() {
     this.http
-      .get<any>('http://localhost:5001/generate_dummy')
+      .get<any>(`${this.apiUrl}/generate_dummy`)
       .subscribe((response) => {
         // Store entire nested object so we keep all 142 features
         this.dummyPayload = response;
@@ -89,16 +91,14 @@ export class LoanApplicationFormComponent {
     // 🟡 Log the final object to see the actual ruble amounts:
     console.log('[DEBUG] Final payload to /predict:', this.dummyPayload);
 
-    this.http
-      .post<any>('http://localhost:5001/predict', this.dummyPayload)
-      .subscribe(
-        (response) => {
-          this.predictionResult = response;
-        },
-        (error) => {
-          console.error('Error predicting loan:', error);
-        }
-      );
+    this.http.post<any>(`${this.apiUrl}/predict`, this.dummyPayload).subscribe(
+      (response) => {
+        this.predictionResult = response;
+      },
+      (error) => {
+        console.error('Error predicting loan:', error);
+      }
+    );
   }
 
   getProbabilityNumber(): number {
