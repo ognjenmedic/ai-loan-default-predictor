@@ -12,7 +12,7 @@
     COPY . .
     
     # Build the Angular app in production mode
-    RUN npm run build -- --configuration production
+    RUN npm run build --configuration production
     
     # ---------------------------------------
     # 2) SERVE STAGE - Serve with Nginx
@@ -25,6 +25,9 @@
     
     # Copy Angular build output to Nginx HTML directory
     COPY --from=build /usr/src/app/dist/loan-predictor /usr/share/nginx/html
+    
+    # Copy custom Nginx config
+    COPY nginx.conf /etc/nginx/conf.d/default.conf
     
     # Expose port 80
     EXPOSE 80
