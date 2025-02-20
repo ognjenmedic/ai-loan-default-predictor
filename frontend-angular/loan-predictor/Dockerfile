@@ -11,8 +11,8 @@
     # Copy the entire Angular project
     COPY . .
     
-    # Build the Angular app in production mode
-    RUN npm run build --configuration production
+    # Corrected build command
+    RUN npm run build -- --configuration=production
     
     # ---------------------------------------
     # 2) SERVE STAGE - Serve with Nginx
