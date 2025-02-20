@@ -118,12 +118,6 @@ select:focus {
   transition: all 0.3s ease;
 }
 
-.btn-primary:active,
-.btn-primary:focus {
-  background-color: #38a169;
-  outline: none;
-}
-
 .btn-primary:hover {
   background-color: #388e3c;
 }
@@ -180,6 +174,45 @@ select:focus {
   font-weight: bold;
 }
 
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust as needed */
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #38a169;
+  border-radius: 50%;
+  animation: bounce 1.5s infinite;
+}
+
+.dot1 {
+  animation-delay: 0s;
+}
+
+.dot2 {
+  animation-delay: 0.3s;
+}
+
+.dot3 {
+  animation-delay: 0.6s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+}
+
 @media (max-width: 767px) {
   .ai-loan-buttons {
     display: flex;
@@ -192,5 +225,28 @@ select:focus {
   .btn-secondary {
     width: 100%; /* Make buttons full width */
     text-align: center;
+  }
+
+  .btn-primary:active,
+  .btn-primary:focus {
+    background-color: #38a169 !important;
+    outline: none;
+  }
+
+  select,
+  label,
+  input,
+  .dti-warning,
+  .btn-primary,
+  .btn-secondary {
+    font-size: 16px;
+  }
+
+  .prediction-title {
+    font-size: 19px;
+  }
+
+  .prediction-text {
+    font-size: 17px;
   }
 }

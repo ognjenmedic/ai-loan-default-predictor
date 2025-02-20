@@ -49,6 +49,8 @@ export class LoanApplicationFormComponent {
 
   @ViewChild('predictionOutput') predictionResultSection!: ElementRef;
 
+  isLoading = false;
+
   constructor(private http: HttpClient) {}
 
   generateDummyData() {
@@ -89,6 +91,8 @@ export class LoanApplicationFormComponent {
       return;
     }
 
+    this.isLoading = true;
+
     const RUBLE_TO_USD = 90;
     const rubIncome = Math.round(this.formData.AMT_INCOME_TOTAL * RUBLE_TO_USD);
     const rubCredit = Math.round(this.formData.AMT_CREDIT * RUBLE_TO_USD);
@@ -109,6 +113,7 @@ export class LoanApplicationFormComponent {
     this.http.post<any>(`${this.apiUrl}/predict`, this.dummyPayload).subscribe(
       (response) => {
         this.predictionResult = response;
+        this.isLoading = false;
 
         // Wait for Angular to update the UI, then scroll to result
         setTimeout(() => {
@@ -117,6 +122,7 @@ export class LoanApplicationFormComponent {
       },
       (error) => {
         console.error('Error predicting loan:', error);
+        this.isLoading = false;
       }
     );
   }

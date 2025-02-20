@@ -96,7 +96,11 @@
     </form>
 
     <!-- Prediction Result -->
-    <div *ngIf="predictionResult" #predictionOutput class="prediction-output">
+    <div
+      *ngIf="predictionResult && !isLoading"
+      #predictionOutput
+      class="prediction-output"
+    >
       <h3 class="prediction-title">Prediction Result</h3>
       <p class="prediction-text">
         <strong>Default Probability:</strong>
@@ -109,7 +113,6 @@
           {{ predictionResult?.formatted_probability }}
         </span>
       </p>
-
       <p class="prediction-text">
         <strong>Prediction:</strong>
         {{
@@ -118,6 +121,13 @@
             : "Low Risk (Default Unlikely)"
         }}
       </p>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loader-container">
+      <div class="dot dot1"></div>
+      <div class="dot dot2"></div>
+      <div class="dot dot3"></div>
     </div>
   </div>
 </div>
