@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://backend:5001', // Docker network service name
+  apiUrl: 'http://3.94.247.36:5001',
 };
