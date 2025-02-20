@@ -11,7 +11,7 @@ from scipy.stats import truncnorm
 from pipeline.orchestrator import orchestrate_features
 
 app = Flask(__name__)
-CORS(app, resources={r"/predict": {"origins": "http://localhost:4200"}, r"/generate_dummy": {"origins": "http://localhost:4200"}})
+CORS(app, resources={r"/*": {"origins": ["http://localhost:4200", "http://3.94.247.36"]}})
 
 # Load metadata and model at startup
 with open("df_final_features.json", "r") as f:
