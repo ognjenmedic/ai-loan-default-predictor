@@ -96,7 +96,7 @@
     </form>
 
     <!-- Prediction Result -->
-    <div class="prediction-output" *ngIf="predictionResult">
+    <div *ngIf="predictionResult" #predictionOutput class="prediction-output">
       <h3 class="prediction-title">Prediction Result</h3>
       <p class="prediction-text">
         <strong>Default Probability:</strong>
@@ -106,14 +106,14 @@
             'low-risk': getProbabilityNumber() <= 50
           }"
         >
-          {{ predictionResult.formatted_probability }}
+          {{ predictionResult?.formatted_probability }}
         </span>
       </p>
 
       <p class="prediction-text">
         <strong>Prediction:</strong>
         {{
-          predictionResult.prediction === 1
+          predictionResult?.prediction === 1
             ? "High Risk (Default Likely)"
             : "Low Risk (Default Unlikely)"
         }}

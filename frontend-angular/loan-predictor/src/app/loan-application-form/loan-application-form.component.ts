@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,17 +16,16 @@ export class LoanApplicationFormComponent {
   dummyPayload: any = null;
   formData = {
     OCCUPATION_TYPE: '',
-    AMT_INCOME_TOTAL: 0, // annual income
-    AMT_CREDIT: 0, // requested credit
+    AMT_INCOME_TOTAL: 0,
+    AMT_CREDIT: 0,
     loanTermMonths: 0, // map from pos_cash_balance_data[0].CNT_INSTALMENT
-    EXT_SOURCE_2: 0, // external source score
+    EXT_SOURCE_2: 0,
   };
 
   dtiWarning: string = '';
 
   predictionResult: any = null;
 
-  // Pre-populate a dropdown for Occupation, if desired
   occupations: string[] = [
     'Laborers',
     'Core staff',
@@ -47,6 +46,8 @@ export class LoanApplicationFormComponent {
     'IT staff',
     'HR staff',
   ];
+
+  @ViewChild('predictionOutput') predictionResultSection!: ElementRef;
 
   constructor(private http: HttpClient) {}
 
@@ -103,12 +104,16 @@ export class LoanApplicationFormComponent {
     }
     this.dummyPayload.application.EXT_SOURCE_2 = this.formData.EXT_SOURCE_2;
 
-    // 🟡 Log the final object to see the actual ruble amounts:
     console.log('[DEBUG] Final payload to /predict:', this.dummyPayload);
 
     this.http.post<any>(`${this.apiUrl}/predict`, this.dummyPayload).subscribe(
       (response) => {
         this.predictionResult = response;
+
+        // Wait for Angular to update the UI, then scroll to result
+        setTimeout(() => {
+          this.scrollToResult();
+        }, 100);
       },
       (error) => {
         console.error('Error predicting loan:', error);
@@ -116,8 +121,17 @@ export class LoanApplicationFormComponent {
     );
   }
 
+  scrollToResult() {
+    if (this.predictionResultSection) {
+      this.predictionResultSection.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  }
+
   getProbabilityNumber(): number {
-    return parseFloat(this.predictionResult.formatted_probability);
+    return parseFloat(this.predictionResult?.formatted_probability ?? '0');
   }
 
   updateNumber(event: any, field: keyof typeof this.formData) {
