@@ -24,7 +24,7 @@
     RUN rm -rf ./*
     
     # Copy Angular build output to Nginx HTML directory
-    COPY --from=build /usr/src/app/dist/loan-predictor /usr/share/nginx/html
+    COPY --from=build /usr/src/app/dist/loan-predictor /usr/share/nginx/html/ai-loan-default-predictor
     
     # Copy custom Nginx config
     COPY nginx.conf /etc/nginx/conf.d/default.conf
