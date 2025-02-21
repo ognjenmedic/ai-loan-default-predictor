@@ -39,7 +39,7 @@ def enforce_dtypes(df):
                 df[col] = df[col].astype(desired_dtype)
     return df
 
-@app.route('/predict', methods=['POST'])
+@app.route('/api/predict', methods=['POST'])
 def predict():
     try:
         # 1) Receive the full JSON payload (nested structure).
@@ -81,7 +81,7 @@ def predict():
 
     
 
-@app.route('/generate_dummy', methods=['GET'])
+@app.route('/api/generate_dummy', methods=['GET'])
 def generate_dummy():
     """
     Return a nested JSON payload with dummy raw features for:
