@@ -11,3 +11,13 @@ body {
   color: #ffffff;
   height: 100vh;
 }
+
+/* Override Termly banner font size */
+.termly-styles-bottom-d26761.termly-styles-termly-stretch-c62824,
+.termly-styles-bottom-d26761.termly-styles-termly-banner-e1ed59 {
+  max-height: 40vh;
+}
+
+.termly-styles-p-f5e0b2 {
+  font-size: 10px;
+}
