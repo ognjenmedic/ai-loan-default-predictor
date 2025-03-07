@@ -129,9 +129,15 @@ export class LoanApplicationFormComponent {
 
   scrollToResult() {
     if (this.predictionResultSection) {
-      this.predictionResultSection.nativeElement.scrollIntoView({
+      const elementY =
+        this.predictionResultSection.nativeElement.getBoundingClientRect().top +
+        window.scrollY;
+
+      const offset = 600;
+
+      window.scrollTo({
+        top: elementY - offset,
         behavior: 'smooth',
-        block: 'start',
       });
     }
   }
