@@ -1,0 +1,25 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 0 40px;
+  background-color: #1f2937;
+  color: white;
+  border-bottom: 1px solid #374151;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar-logo {
+  width: 170px;
+  cursor: pointer;
+  padding-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+  }
+}

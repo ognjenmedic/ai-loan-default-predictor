@@ -2,7 +2,7 @@ import pandas as pd
 
 def force_categorical_dtypes(df, table_name):
     """
-    Reads from feature_ranges.json or raw_features_dtypes.json to see if columns
+    Reads from feature_ranges.json to see if columns
     should be category. Then casts them so that aggregator picks them up.
     """
     import json
