@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
   templateUrl: './loan-application-form.component.html',
   styleUrls: ['./loan-application-form.component.css'],
 })
-export class LoanApplicationFormComponent {
+export class LoanApplicationFormComponent implements OnInit {
   private apiUrl = environment.apiUrl;
   dummyPayload: any = null;
   formData = {
@@ -52,6 +52,20 @@ export class LoanApplicationFormComponent {
   isLoading = false;
 
   constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    // 1) Preload the entire dummy payload from backend but do NOT populate the UI yet
+    this.http.get<any>(`${this.apiUrl}/generate_dummy`).subscribe({
+      next: (response) => {
+        this.dummyPayload = response;
+        // Don't copy into form fields yet –
+        // we just keep the entire JSON structure in memory.
+      },
+      error: (err) => {
+        console.error('Could not preload dummy payload', err);
+      },
+    });
+  }
 
   generateDummyData() {
     this.http
