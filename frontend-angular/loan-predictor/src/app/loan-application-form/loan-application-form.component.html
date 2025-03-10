@@ -63,7 +63,8 @@
         <input
           id="loanTerm"
           type="number"
-          [(ngModel)]="formData.loanTermMonths"
+          [value]="formData.loanTermMonths"
+          (input)="updateNumber($event, 'loanTermMonths')"
           name="loanTerm"
           required
         />
