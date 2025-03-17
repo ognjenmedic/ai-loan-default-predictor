@@ -1,5 +1,5 @@
 body {
-  background-color: #1f2937; /* Dark background */
+  background-color: #1f2937;
   font-family: "Inter", sans-serif;
   color: #ffffff;
 }
@@ -11,7 +11,7 @@ body {
   margin-right: auto;
   margin-bottom: 50px;
   padding: 25px;
-  background-color: #2d3748; /* Slightly lighter dark background */
+  background-color: #2d3748;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
@@ -24,12 +24,12 @@ body {
 }
 
 .ai-loan-content {
-  max-width: 700px; /* Same as .ai-loan-form */
-  margin: 0 auto; /* Center everything */
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .ai-loan-form {
-  width: 100%; /* Ensure it doesn't exceed the parent */
+  width: 100%;
 }
 
 .form-field {
@@ -48,10 +48,10 @@ body {
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  width: 18px; /* Adjust size */
+  width: 18px;
   height: 18px;
-  pointer-events: none; /* Prevent interference */
-  fill: #ffffff; /* Change color if needed */
+  pointer-events: none;
+  fill: #ffffff;
 }
 
 select {
@@ -62,10 +62,10 @@ select {
   color: #ffffff;
   border: 1px solid #4a5568;
   border-radius: 5px;
-  appearance: none; /* Removes default browser styling */
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding-left: 35px; /* Adds space for the custom arrow */
+  padding-left: 35px;
 }
 
 label {
@@ -77,7 +77,6 @@ label {
 
 input,
 select {
-  /* width: 100%; */
   max-width: 100%;
   padding: 10px;
   font-size: 14px;
@@ -94,7 +93,7 @@ select:focus {
 }
 
 .dti-warning {
-  color: #ff4141; /* Red warning text */
+  color: #ff4141;
   font-size: 14px;
   margin-bottom: 15px;
   font-weight: 500;
@@ -114,7 +113,6 @@ select:focus {
   font-weight: 500;
   border-radius: 5px;
   cursor: pointer;
-  /* background-color: #4caf50; */
   background-color: #38a169;
   color: white;
   border: none;
@@ -149,8 +147,8 @@ select:focus {
 }
 
 .prediction-output {
-  max-width: 100%; /* Ensure alignment */
-  margin: 20px auto; /* Keep it centered */
+  max-width: 100%;
+  margin: 20px auto;
   padding: 13px;
   background-color: #2d3748;
   border-radius: 8px;
@@ -168,12 +166,12 @@ select:focus {
 }
 
 .high-risk {
-  color: #ff4141; /* Bright Red for High Risk */
+  color: #ff4141;
   font-weight: bold;
 }
 
 .low-risk {
-  color: #2fd57c; /* Green for Low Risk */
+  color: #2fd57c;
   font-weight: bold;
 }
 
@@ -181,7 +179,7 @@ select:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px; /* Adjust as needed */
+  height: 100px;
 }
 
 .dot {
@@ -226,7 +224,7 @@ select:focus {
 
   .btn-primary,
   .btn-secondary {
-    width: 100%; /* Make buttons full width */
+    width: 100%;
     text-align: center;
   }
 

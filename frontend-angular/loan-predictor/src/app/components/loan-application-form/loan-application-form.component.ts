@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-loan-application-form',
@@ -18,7 +18,7 @@ export class LoanApplicationFormComponent implements OnInit {
     OCCUPATION_TYPE: '',
     AMT_INCOME_TOTAL: 0,
     AMT_CREDIT: 0,
-    loanTermMonths: 0, // map from pos_cash_balance_data[0].CNT_INSTALMENT
+    loanTermMonths: 0,
     EXT_SOURCE_2: 0,
   };
 
@@ -54,16 +54,11 @@ export class LoanApplicationFormComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    // 1) Preload the entire dummy payload from backend but do NOT populate the UI yet
     this.http.get<any>(`${this.apiUrl}/generate_dummy`).subscribe({
       next: (response) => {
         this.dummyPayload = response;
-        // Don't copy into form fields yet –
-        // we just keep the entire JSON structure in memory.
       },
-      error: (err) => {
-        console.error('Could not preload dummy payload', err);
-      },
+      error: (err) => {},
     });
   }
 
@@ -80,9 +75,9 @@ export class LoanApplicationFormComponent implements OnInit {
 
         // Prevent DTI from being too high
         if (monthlyIncome > 0 && loanTermMonths > 0) {
-          const maxLoanAmount = monthlyIncome * loanTermMonths * 0.3; // Max loan ensuring DTI ≤ 30%
+          const maxLoanAmount = monthlyIncome * loanTermMonths * 0.3;
           if (loanAmount > maxLoanAmount) {
-            loanAmount = Math.floor(maxLoanAmount); // Adjust loan amount to be valid
+            loanAmount = Math.floor(maxLoanAmount);
           }
         }
 
@@ -95,13 +90,12 @@ export class LoanApplicationFormComponent implements OnInit {
           EXT_SOURCE_2: response.application.EXT_SOURCE_2 ?? 0,
         };
 
-        this.checkDTI(); // Ensure the UI updates immediately
+        this.checkDTI();
       });
   }
 
   predictLoan() {
     if (!this.dummyPayload) {
-      console.error('No dummy payload available. Generate first.');
       return;
     }
 
@@ -122,20 +116,15 @@ export class LoanApplicationFormComponent implements OnInit {
     }
     this.dummyPayload.application.EXT_SOURCE_2 = this.formData.EXT_SOURCE_2;
 
-    console.log('[DEBUG] Final payload to /predict:', this.dummyPayload);
-
     this.http.post<any>(`${this.apiUrl}/predict`, this.dummyPayload).subscribe(
       (response) => {
         this.predictionResult = response;
         this.isLoading = false;
-
-        // Wait for Angular to update the UI, then scroll to result
         setTimeout(() => {
           this.scrollToResult();
         }, 100);
       },
       (error) => {
-        console.error('Error predicting loan:', error);
         this.isLoading = false;
       }
     );
@@ -161,7 +150,7 @@ export class LoanApplicationFormComponent implements OnInit {
   }
 
   updateNumber(event: any, field: keyof typeof this.formData) {
-    let value = event.target.value.replace(/,/g, ''); // Remove existing commas
+    let value = event.target.value.replace(/,/g, '');
     if (!isNaN(value) && field in this.formData) {
       (this.formData as any)[field] = Number(value);
     }
@@ -176,15 +165,15 @@ export class LoanApplicationFormComponent implements OnInit {
     const loanTermMonths = this.formData.loanTermMonths;
 
     if (monthlyIncome > 0 && loanAmount > 0 && loanTermMonths > 0) {
-      const estimatedAnnuity = loanAmount / loanTermMonths; // Approximate monthly payment
-      const dtiRatio = estimatedAnnuity / monthlyIncome; // Debt-to-Income ratio
+      const estimatedAnnuity = loanAmount / loanTermMonths;
+      const dtiRatio = estimatedAnnuity / monthlyIncome;
 
       if (dtiRatio > 0.3) {
         this.dtiWarning = `DTI ratio too high (${(dtiRatio * 100).toFixed(
           1
         )}%). Please choose a lower loan amount.`;
       } else {
-        this.dtiWarning = ''; // Clear the warning if ratio is acceptable
+        this.dtiWarning = '';
       }
     }
   }
@@ -195,11 +184,11 @@ export class LoanApplicationFormComponent implements OnInit {
     const loanTermMonths = this.formData.loanTermMonths;
 
     if (monthlyIncome > 0 && loanAmount > 0 && loanTermMonths > 0) {
-      const estimatedAnnuity = loanAmount / loanTermMonths; // Approximate monthly payment
-      const dtiRatio = estimatedAnnuity / monthlyIncome; // Debt-to-Income ratio
+      const estimatedAnnuity = loanAmount / loanTermMonths;
+      const dtiRatio = estimatedAnnuity / monthlyIncome;
 
-      return dtiRatio > 0.3; // Disable button if DTI is greater than 30%
+      return dtiRatio > 0.3;
     }
-    return false; // Button remains enabled
+    return false;
   }
 }

@@ -52,6 +52,6 @@ yarn-error.log*
 *.tsbuildinfo
 .eslintcache
 
-# Ignore environment files (important for security)
+# Ignore environment files
 src/environments/environment.prod.ts
 src/environments/environment.ts

@@ -9,7 +9,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 
-# Install system dependencies (adds libgomp1 to fix LightGBM issue)
+# Install system dependencies 
 RUN apt-get update && apt-get install -y libgomp1 && rm -rf /var/lib/apt/lists/*
 
 
@@ -19,7 +19,7 @@ RUN pip install --upgrade pip \
     && pip install gunicorn \
     && pip install --no-cache-dir -r requirements.txt
 
-# 4) Copy your application code
+# 4) Copy application code
 COPY . .
 
 # 5) Expose the Flask port

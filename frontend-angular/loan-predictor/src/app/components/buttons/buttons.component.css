@@ -1,13 +1,12 @@
-/* Buttons */
 .buttons {
   display: flex;
-  flex-direction: row; /* Makes buttons horizontal */
+  flex-direction: row;
   padding-top: 30px;
   padding-bottom: 60px;
   justify-content: center;
   gap: 30px;
   margin-top: 10px;
-  width: 100%; /* Ensure it takes full width */
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -23,8 +22,8 @@
   font-weight: bold;
   text-align: center;
   transition: background 0.3s ease-in-out;
-  flex: 1; /* Makes buttons responsive */
-  max-width: 250px; /* Prevents excessive stretching */
+  flex: 1;
+  max-width: 250px;
 }
 
 .buttons a:hover {
