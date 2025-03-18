@@ -7,8 +7,18 @@ import random
 import numpy as np
 import scipy.stats as stats
 from scipy.stats import truncnorm
+import logging
 
 from pipeline.orchestrator import orchestrate_features
+
+logging.basicConfig(
+    level=logging.INFO, 
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("loan_predictor.log"), 
+        logging.StreamHandler() 
+    ]
+)
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": ["http://localhost:4200", "http://3.94.247.36", "https://ai.fullstackista.com"]}})
@@ -48,12 +58,13 @@ def predict():
         # 2) Orchestrate features (merges + engineered features).
         input_df = orchestrate_features(payload)
 
-        # Print or log the row
-        print("\n[DEBUG] Final input_df shape:", input_df.shape)
-        print(input_df.iloc[0].to_dict())  # or head() if multiple rows
+        # Log the DataFrame shape
+        logging.info(f"✅ Final input_df shape: {input_df.shape}")
 
-        # 3) Remove ID columns and target (if present), 
-        #    mirroring your training step:
+        # Log the first row (for debugging)
+        logging.debug(f"{input_df.iloc[0].to_dict()}") 
+
+        # 3) Remove ID columns and target (if present)
         for col in ["SK_ID_CURR", "SK_ID_BUREAU", "TARGET"]:
             if col in input_df.columns:
                 input_df.drop(columns=col, inplace=True)
@@ -61,22 +72,24 @@ def predict():
         # 4) Enforce data types to match training.
         input_df = enforce_dtypes(input_df)
 
-        # 5) Ensure we only pass the exact training features to model.
+        # 5) Ensure we only pass the exact training features to model
         input_df = input_df[TRAIN_FEATURES]
 
         # 6) Generate prediction using loaded model.
         preds = model.predict(input_df)
 
-        # Example threshold > 0.5
-        predicted_class = int(preds[0] > 0.5)
+        # Log the prediction result
+        logging.info(f"✅ Prediction: {preds[0]} (Probability: {round(preds[0] * 100, 2)}%)")
+
         return jsonify({
-            "prediction": predicted_class, 
+            "prediction": int(preds[0] > 0.5), 
             "probability": preds[0], 
             "formatted_probability": f"{round(preds[0] * 100, 2)}%"
         })
 
     
     except Exception as e:
+        logging.error(f"❌ Prediction error: {str(e)}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
     
@@ -114,8 +127,6 @@ def generate_dummy():
             return row
 
         # 3) Function that picks random values from the stats
-        import random
-
         def _sample_from_range(stats):
             """
             Generates realistic values for numeric and categorical features.
@@ -126,9 +137,7 @@ def generate_dummy():
             - Reasonable bounds for loan terms and durations,
             - Realistic frequency sampling for categorical features.
             """
-            import random
-            import numpy as np
-            from scipy.stats import truncnorm
+
 
             # Define which columns are money-related (will convert from rubles to USD).
             money_fields = [
@@ -151,22 +160,20 @@ def generate_dummy():
             if feature_name in money_fields and col_mean > 0:
                 # No bounding/clamping
                 sigma = 0.3
-                col_mean_usd = col_mean / RUB_TO_USD  # If you still want to display USD
+                col_mean_usd = col_mean / RUB_TO_USD  
                 val_usd = np.random.lognormal(mean=np.log(col_mean_usd), sigma=sigma)
 
-                # Just return it without clamping
                 return round(val_usd, 2)
 
             # 2) Fix Loan Terms (Months) if feature name starts with "CNT_"
             if feature_name.startswith("CNT_"):
-                # e.g. ~5 years +- some noise, clipped to [6, 360] months
                 return int(min(max(random.gauss(60, 30), 6), 360))
 
             # 3) Convert "DAYS_*" columns to approximate years (absolute value)
             if "DAYS" in feature_name.upper():
                 # e.g. if mean = -2000 => ~5.5 years
                 years = abs(col_mean) / 365.0
-                # Add a little random variation
+                # Add random variation
                 variation = random.uniform(-0.5, 0.5)
                 return round(years + variation, 1)
 
@@ -198,8 +205,6 @@ def generate_dummy():
         dummy_payload = {}
 
         # 4a) Top-level "SK_ID_CURR"
-        # Use the range from the 'application' table if you like, or just pick a random int
-        # But let's do it from the feature_ranges
         app_ranges = feature_ranges.get("application", {})
         if "SK_ID_CURR" in app_ranges:
             # Generate SK_ID_CURR from the range
@@ -216,26 +221,26 @@ def generate_dummy():
 
         # 4c) bureau_data (list of rows)
         bureau_rows = []
-        # Suppose we pick 2 random bureau rows 
+        # Pick 2 random bureau rows 
         for i in range(2):
             bureau_row = _generate_table_row("bureau_data")
             bureau_row["SK_ID_CURR"] = dummy_payload["SK_ID_CURR"]
-            bureau_row["SK_ID_BUREAU"] = 9999990 + i  # or sample from range
+            bureau_row["SK_ID_BUREAU"] = 9999990 + i 
             bureau_rows.append(bureau_row)
         dummy_payload["bureau_data"] = bureau_rows
 
         # 4d) bureau_balance_data (list of rows)
-        # We can map the same SK_ID_BUREAU
+        # Map the same SK_ID_BUREAU
         bb_rows = []
         for i, bureau_row in enumerate(bureau_rows):
-            # create 1 or 2 rows for each bureau
+            # create rows for each bureau
             for j in range(2):
                 bb_row = _generate_table_row("bureau_balance_data")
                 bb_row["SK_ID_BUREAU"] = bureau_row["SK_ID_BUREAU"]
                 bb_rows.append(bb_row)
         dummy_payload["bureau_balance_data"] = bb_rows
 
-        # 4e) credit_card_balance_data (1 row for demonstration)
+        # 4e) credit_card_balance_data (1 row)
         ccb_row = _generate_table_row("credit_card_balance_data")
         ccb_row["SK_ID_CURR"] = dummy_payload["SK_ID_CURR"]
         ccb_row["SK_ID_PREV"] = 8888881
@@ -259,17 +264,21 @@ def generate_dummy():
         prev_app_row["SK_ID_PREV"] = 8888884
         dummy_payload["previous_application_data"] = [prev_app_row]
 
-        # 5) Debug print
-        print("\n🔍 [DEBUG] Final dummy_payload keys:", list(dummy_payload.keys()))
+        # 5) Debug log
+        logging.debug(f"🔍 Final dummy_payload keys: {list(dummy_payload.keys())}")
+
         
         return jsonify(dummy_payload), 200
 
+
     except Exception as e:
+        logging.error(f"❌ Error generating dummy data: {str(e)}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
 
 
-# ✅ Now run Flask only after all routes are registered
+# Run Flask
 if __name__ == '__main__':
-    print("🔍 Registered Routes:", app.url_map) 
+    logging.info("✅ Starting Flask server...")
+    logging.info(f"Registered Routes: {app.url_map}")
     app.run(host="0.0.0.0", port=5001, debug=True)

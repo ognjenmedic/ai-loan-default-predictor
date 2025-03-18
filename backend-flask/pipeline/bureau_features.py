@@ -1,6 +1,12 @@
 import pandas as pd
 import numpy as np
 from functools import reduce
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 def compute_bureau_credit_activity(df_bureau):
     """
@@ -96,6 +102,8 @@ def generate_bureau_features(df_bureau):
       - Categorical aggregations
     Then it merges these DataFrames on SK_ID_CURR and returns the final feature DataFrame.
     """
+    logging.info("Starting bureau feature computation...")
+    
     # Compute features from different aspects
     credit_activity = compute_bureau_credit_activity(df_bureau)
     loan_amounts = compute_bureau_loan_amounts(df_bureau)
@@ -106,5 +114,7 @@ def generate_bureau_features(df_bureau):
     # Merge all features sequentially on 'SK_ID_CURR'
     features_list = [credit_activity, loan_amounts, time_features, overdue_features, categorical_features]
     bureau_features = reduce(lambda left, right: pd.merge(left, right, on="SK_ID_CURR", how="left"), features_list)
+
+    logging.info(f"✅ Bureau features generated. Final shape: {bureau_features.shape}")
     
     return bureau_features

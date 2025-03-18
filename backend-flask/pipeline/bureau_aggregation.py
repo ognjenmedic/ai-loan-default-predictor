@@ -1,6 +1,13 @@
 import pandas as pd
 import numpy as np
 from functools import reduce
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,  
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 def aggregate_numeric_features(df_bureau):
     """
@@ -42,16 +49,16 @@ def merge_aggregated_features(agg_numeric, agg_categorical):
 
 def safe_merge(df_main, df_new, merge_on="SK_ID_CURR", name=""):
     """
-    Merge two dataframes and print some debugging information.
+    Merge two dataframes and log some debugging information.
     """
     prev_shape = df_main.shape
     df_main = df_main.merge(df_new, on=merge_on, how="left")
-    print(f"✅ Merged {name}: {prev_shape} -> {df_main.shape}")
+    logging.info(f"✅ Merged {name}: {prev_shape} -> {df_main.shape}")
     missing = df_main.isnull().sum()
     missing = missing[missing > 0]
     if not missing.empty:
-        print(f"🛠️ Missing Values in {name} After Merge:\n{missing}")
-    print("-" * 50)
+        logging.warning(f"🛠️ Missing Values in {name} After Merge:\n{missing}")
+    logging.info("-" * 50)
     return df_main
 
 def aggregate_bureau_features(df_bureau, additional_feature_dfs):

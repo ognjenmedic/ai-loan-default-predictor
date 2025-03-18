@@ -1,5 +1,11 @@
 import pandas as pd
 import numpy as np
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 def aggregate_numeric_features(df_credit_card_balance):
     """
@@ -49,17 +55,17 @@ def merge_aggregated_features(agg_numeric, agg_categorical):
 
 def safe_merge(df_main, df_new, merge_on="SK_ID_CURR", name=""):
     """
-    Merge two DataFrames on the specified key and print debugging information.
+    Merge two DataFrames on the specified key and log debugging information.
     """
     prev_shape = df_main.shape
     df_main = df_main.merge(df_new, on=merge_on, how="left")
     
-    print(f"✅ Merged {name}: {prev_shape} -> {df_main.shape}")
+    logging.info(f"✅ Merged {name}: {prev_shape} -> {df_main.shape}")
+
     missing = df_main.isnull().sum()
     missing = missing[missing > 0]
     if not missing.empty:
-        print(f"🛠️ Missing Values in {name} After Merge:\n{missing}")
-    print("-" * 50)
+        logging.warning(f"🛠️ Missing Values in {name} After Merge:\n{missing}")
     
     return df_main
 
@@ -79,6 +85,9 @@ def aggregate_credit_card_balance_features(df_credit_card_balance, additional_fe
     Returns:
       The final aggregated credit card balance DataFrame.
     """
+
+    logging.info("Starting credit card balance feature aggregation...")
+    
     # Step 1: Aggregate numeric features
     agg_numeric = aggregate_numeric_features(df_credit_card_balance)
     
@@ -87,7 +96,7 @@ def aggregate_credit_card_balance_features(df_credit_card_balance, additional_fe
     
     # Step 3: Merge numeric and categorical aggregates
     df_aggregated = merge_aggregated_features(agg_numeric, agg_categorical)
-    print(f"✅ Aggregation complete. New df_credit_card_balance_aggregated shape: {df_aggregated.shape}")
+    logging.info(f"✅ Aggregation complete. New df_credit_card_balance_aggregated shape: {df_aggregated.shape}")
     
     # Step 4: Merge in each additional engineered feature DataFrame
     for df_new, name in additional_feature_dfs:
@@ -96,26 +105,26 @@ def aggregate_credit_card_balance_features(df_credit_card_balance, additional_fe
     # Step 5: Sanity checks for missing values, hidden NaNs, and infinite values
     missing_values = df_aggregated.isna().sum()
     missing_values = missing_values[missing_values > 0]
-    print("\n🔍 Standard Missing Values in Aggregated Credit Card Features After Merging:")
+    logging.info("🔍 Standard Missing Values in Aggregated Credit Card Features After Merging:")
     if missing_values.empty:
-        print("✅ No standard NaN values detected.")
+        logging.info("✅ No standard NaN values detected.")
     else:
-        print(missing_values)
+        logging.warning(missing_values)
     
     hidden_nans = (df_aggregated == "").sum() + (df_aggregated == "nan").sum()
     hidden_nans = hidden_nans[hidden_nans > 0]
-    print("\n🔍 Hidden NaNs (Empty Strings or 'nan' as Text) in Aggregated Credit Card Features After Merging:")
+    logging.info("🔍 Hidden NaNs (Empty Strings or 'nan' as Text) in Aggregated Credit Card Features After Merging:")
     if hidden_nans.empty:
-        print("✅ No hidden NaNs detected.")
+        logging.info("✅ No hidden NaNs detected.")
     else:
-        print(hidden_nans)
+        logging.warning(hidden_nans)
     
     inf_values = df_aggregated.replace([np.inf, -np.inf], np.nan).isna().sum()
     inf_values = inf_values[inf_values > 0]
-    print("\n🔍 Infinite Values in Aggregated Credit Card Features After Merging:")
+    logging.info("🔍 Infinite Values in Aggregated Credit Card Features After Merging:")
     if inf_values.empty:
-        print("✅ No Inf values detected.")
+        logging.info("✅ No Inf values detected.")
     else:
-        print(inf_values)
+        logging.warning(inf_values)
     
     return df_aggregated

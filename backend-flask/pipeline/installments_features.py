@@ -1,40 +1,38 @@
 import pandas as pd
 import numpy as np
+import logging
 
-###############################################################################
-# 1) Row-Level Feature Creation
-###############################################################################
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+# Row-Level Feature Creation
 def create_row_level_features(df):
     """
-    Replicate row-level transformations from EDA notebook:
-      - PAYMENT_RATIO: AMT_PAYMENT / AMT_INSTALMENT (safe division)
-      - MISSED_PAYMENT: 1 if AMT_PAYMENT == 0
-      - LATE_PAYMENT: 1 if DAYS_ENTRY_PAYMENT > DAYS_INSTALMENT
-      - PAYMENT_DELAY: DAYS_ENTRY_PAYMENT - DAYS_INSTALMENT
+    Creates row-level features for installments data:
+      - PAYMENT_RATIO: Ratio of actual payment to the expected installment.
+      - MISSED_PAYMENT: Indicates if a payment was missed (1 if payment is zero).
+      - LATE_PAYMENT: Flags late payments (1 if payment was made after due date).
+      - PAYMENT_DELAY: Number of days between payment date and due date.
     """
     df = df.copy()
     
-    # Payment Ratio
     df["PAYMENT_RATIO"] = df["AMT_PAYMENT"] / df["AMT_INSTALMENT"].replace(0, np.nan)
     
-    # Missed Payment if AMT_PAYMENT == 0
     df["MISSED_PAYMENT"] = (df["AMT_PAYMENT"] == 0).astype(int)
     
-    # Late Payment if DAYS_ENTRY_PAYMENT > DAYS_INSTALMENT
     df["LATE_PAYMENT"] = (df["DAYS_ENTRY_PAYMENT"] > df["DAYS_INSTALMENT"]).astype(int)
     
-    # Payment Delay
     df["PAYMENT_DELAY"] = df["DAYS_ENTRY_PAYMENT"] - df["DAYS_INSTALMENT"]
     
     return df
 
-###############################################################################
-# 2) Numeric Aggregator => "installments_agg_*"
-###############################################################################
+# Numeric Aggregator => "installments_agg_*"
 def compute_numeric_aggregates(df):
     """
-    Aggregates ALL numeric columns (except SK_ID_PREV) 
-    using mean, sum, max, min => columns like "installments_agg_...".
+    Computes aggregate statistics for numeric columns (excluding SK_ID_PREV).
+    Aggregates include mean, sum, max, and min, with column names prefixed as 'installments_agg_'.
     """
     numeric_df = df.select_dtypes(include=['number']).drop(columns=['SK_ID_PREV'], errors='ignore')
     agg_funcs = ['mean', 'sum', 'max', 'min']
@@ -45,15 +43,13 @@ def compute_numeric_aggregates(df):
     agg_numeric.reset_index(inplace=True)
     return agg_numeric
 
-###############################################################################
-# 3) Custom Aggregators (Matching Notebook Logic)
-###############################################################################
+
 def compute_installments_credit_activity(df):
     """
-    # Aggregation from EDA:
-      - installments_NUM_PAYMENTS = count of SK_ID_PREV
-      - installments_NUM_MISSED_PAYMENTS = sum of MISSED_PAYMENT
-      - installments_MISSED_PAYMENT_RATIO = mean of MISSED_PAYMENT
+    Computes credit activity metrics:
+      - Total number of installment payments.
+      - Total number of missed payments.
+      - Ratio of missed payments to total payments.
     """
     df_grp = df.groupby("SK_ID_CURR").agg(
         installments_NUM_PAYMENTS=("SK_ID_PREV", "count"),
@@ -65,12 +61,10 @@ def compute_installments_credit_activity(df):
 
 def compute_installments_loan_amount(df):
     """
-    # Aggregation from EDA:
-      - installments_MEAN_INSTALMENT_AMOUNT = mean of AMT_INSTALMENT
-      - installments_MEAN_ACTUAL_PAYMENT = mean of AMT_PAYMENT
-      - installments_SUM_INSTALMENT_AMOUNT = sum of AMT_INSTALMENT
-      - installments_SUM_ACTUAL_PAYMENT = sum of AMT_PAYMENT
-      - installments_PAYMENT_COMPLIANCE_RATIO = sum(actual)/sum(instalment)
+    Computes loan amount-related metrics:
+      - Average and total installment amounts.
+      - Average and total actual payments.
+      - Payment compliance ratio (total actual payment / total installment amount).
     """
     df_grp = df.groupby("SK_ID_CURR").agg(
         installments_MEAN_INSTALMENT_AMOUNT=("AMT_INSTALMENT", "mean"),
@@ -89,12 +83,11 @@ def compute_installments_loan_amount(df):
 
 def compute_installments_time_based(df):
     """
-    # Aggregation from EDA:
-      - installments_MEAN_DAYS_ENTRY_PAYMENT, installments_STD_DAYS_ENTRY_PAYMENT
-      - installments_MIN_DAYS_ENTRY_PAYMENT, installments_MAX_DAYS_ENTRY_PAYMENT
-      - installments_MEAN_DAYS_INSTALMENT, installments_MIN_DAYS_INSTALMENT, installments_MAX_DAYS_INSTALMENT
-      - installments_TIME_SINCE_LAST_PAYMENT = abs of max DAYS_ENTRY_PAYMENT
-      - installments_MEAN_PAYMENT_DELAY = abs(mean(DAYS_ENTRY_PAYMENT) - mean(DAYS_INSTALMENT))
+    Computes time-related metrics:
+      - Mean, std, min, and max days until payment.
+      - Mean and max days until installment due.
+      - Time since last payment (absolute max days).
+      - Mean payment delay (difference between expected and actual payment date).
     """
     df_grp = df.groupby("SK_ID_CURR").agg(
         installments_MEAN_DAYS_ENTRY_PAYMENT=("DAYS_ENTRY_PAYMENT", "mean"),
@@ -116,11 +109,9 @@ def compute_installments_time_based(df):
 
 def compute_installments_overdue(df):
     """
-    # Aggregation from EDA:
-      - installments_MEAN_PAYMENT_DELAY = mean of PAYMENT_DELAY
-      - installments_STD_PAYMENT_DELAY = std of PAYMENT_DELAY
-      - installments_NUM_LATE_PAYMENTS = sum of LATE_PAYMENT
-      - installments_LATE_PAYMENT_RATIO = mean of LATE_PAYMENT
+    Computes overdue payment statistics:
+      - Mean and std of payment delays.
+      - Number and ratio of late payments.
     """
     df_grp = df.groupby("SK_ID_CURR").agg(
         installments_MEAN_PAYMENT_DELAY=("PAYMENT_DELAY", "mean"),
@@ -131,17 +122,19 @@ def compute_installments_overdue(df):
     return df_grp
 
 
-###############################################################################
-# 4) Master Function That Produces Final DataFrame
-###############################################################################
+
 def generate_installments_features(df_installments_payments):
     """
-    Replicates entire EDA/Feature Engineering for 'installments_payments':
-      A) Row-Level Features (PAYMENT_RATIO, MISSED_PAYMENT, LATE_PAYMENT, PAYMENT_DELAY)
-      B) Numeric Aggregates => "installments_agg_*" columns
-      C) Custom Aggregators => credit_activity, loan_amount, time_based, overdue
-      D) Merge them all into a single DataFrame keyed by SK_ID_CURR
+    Computes and merges all engineered features for installments payments.
+
+    Steps:
+    1. Create row-level features (PAYMENT_RATIO, MISSED_PAYMENT, etc.).
+    2. Compute numeric aggregates for all numerical data.
+    3. Compute credit activity, loan amount, time-based, and overdue features.
+    4. Merge all datasets into a single DataFrame at `SK_ID_CURR` level.
     """
+
+    logging.info("Starting installments feature computation...")
 
     # A) Row-level features
     df_temp = create_row_level_features(df_installments_payments)
@@ -149,10 +142,10 @@ def generate_installments_features(df_installments_payments):
     # B) Numeric aggregator => "installments_agg_*"
     df_numeric_agg = compute_numeric_aggregates(df_temp)
 
-   # 🟡 Debug print aggregator columns
-    print("\n[DEBUG] numeric_agg columns:")
-    print(df_numeric_agg.columns)
-    print(df_numeric_agg.head(3))
+   # Debug log aggregator columns
+    logging.debug("Numeric Aggregates Computed:")
+    logging.debug(f"Columns: {df_numeric_agg.columns.tolist()}")
+    logging.debug(f"Sample Rows:\n{df_numeric_agg.head(3)}")
 
 
     # C) Custom aggregator DataFrames
@@ -166,5 +159,7 @@ def generate_installments_features(df_installments_payments):
     df_final = df_final.merge(df_loan_amount, on="SK_ID_CURR", how="left")
     df_final = df_final.merge(df_time_based, on="SK_ID_CURR", how="left")
     df_final = df_final.merge(df_overdue, on="SK_ID_CURR", how="left")
+
+    logging.info(f"✅ Installments features generated. Final shape: {df_final.shape}")
 
     return df_final

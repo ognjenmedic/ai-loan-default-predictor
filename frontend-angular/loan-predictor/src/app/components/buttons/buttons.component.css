@@ -14,7 +14,7 @@
 .buttons a {
   display: inline-block;
   min-width: 100px;
-  background: #4caf50;
+  background: #38a169;
   color: white;
   padding: 12px 15px;
   border-radius: 5px;
@@ -27,7 +27,7 @@
 }
 
 .buttons a:hover {
-  background: #45a049;
+  background: #388e3c;
 }
 
 @media (max-width: 768px) {

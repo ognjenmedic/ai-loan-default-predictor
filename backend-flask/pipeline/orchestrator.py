@@ -1,4 +1,14 @@
 import pandas as pd
+import logging
+
+logging.basicConfig(
+    level=logging.INFO, 
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("app.log"),
+        logging.StreamHandler()
+    ]
+)
 
 def force_categorical_dtypes(df, table_name):
     """
@@ -184,15 +194,16 @@ def process_installments_payments_data(payload):
     if "installments_payments_data" in payload:
         df_inst = pd.DataFrame(payload["installments_payments_data"])
 
-        # 1) Print dtypes before forcing categories
-        print("\n[DEBUG] (Before categoricals) df_inst dtypes:")
-        print(df_inst.dtypes)
-        print(df_inst.head(3))
+        # 1) Log dtypes before forcing categories
+        logging.debug("(Before categoricals) df_inst dtypes:")
+        logging.debug(f"{df_inst.dtypes}")
+        logging.debug(f"{df_inst.head(3)}")
+
 
         # 2) Force categories
         df_inst = force_categorical_dtypes(df_inst, "installments_payments_data")
         
-        # 3) Cast certain columns back to numeric if needed
+        # 3) Cast certain columns back to numeric 
         #    so the aggregator will produce mean, sum, min, max columns.
         numeric_cols = ["NUM_INSTALMENT_VERSION", "NUM_INSTALMENT_NUMBER",
                         "AMT_INSTALMENT", "AMT_PAYMENT"]
@@ -200,11 +211,11 @@ def process_installments_payments_data(payload):
             if col in df_inst.columns:
                 df_inst[col] = pd.to_numeric(df_inst[col], errors="coerce")
 
-        # Make sure SK_ID_CURR is also numeric (int) to match merges
+        # Making sure SK_ID_CURR is also numeric (int) to match merges
         if "SK_ID_CURR" in df_inst.columns:
             df_inst["SK_ID_CURR"] = pd.to_numeric(df_inst["SK_ID_CURR"], errors="coerce")
 
-        # 4) Now pass to your aggregator function
+        # 4) Pass to aggregator function
         final_installments_feats = generate_installments_features(df_inst)
         return final_installments_feats
 
@@ -238,14 +249,14 @@ def orchestrate_features(payload):
     # Step 1) Build the main application DataFrame
     df_app = process_application_data(payload)
     if df_app is None or df_app.empty:
-        raise ValueError("🚨 'application' data is required in payload to build the main DataFrame.")
+        raise ValueError("'application' data is required in payload to build the main DataFrame.")
     
     # Check if SK_ID_CURR is in the application data
     if "SK_ID_CURR" not in df_app.columns:
-        raise ValueError("🚨 'SK_ID_CURR' is missing in the application data! Cannot merge.")
+        raise ValueError("'SK_ID_CURR' is missing in the application data! Cannot merge.")
     
-    print(f"\n🔍 [DEBUG] Main application shape: {df_app.shape}")
-    print(df_app.head(1))
+    logging.info(f"✅ Main application shape: {df_app.shape}")
+    logging.debug(f"{df_app.head(1)}")
     
     # Step 2) Process each of the other data sources
     bureau_feats = process_bureau_data(payload)
@@ -267,17 +278,18 @@ def orchestrate_features(payload):
 
     for feat_name, df in features_dict.items():
         if df is not None:
-            print(f"✅ [DEBUG] {feat_name} shape: {df.shape}")
+            logging.info(f"✅ {feat_name} shape: {df.shape}")
         else:
-            print(f"❌ [DEBUG] {feat_name} is None (no data provided).")
+            logging.warning(f"❌ {feat_name} is None (no data provided).")
+
 
     # Step 3) Merge everything onto df_app
     df_merged = merge_features(df_app, [df for df in features_dict.values() if df is not None])
     
-    print(f"\n🔍 [DEBUG] Final shape after merging all features: {df_merged.shape}")
-    print(df_merged.head(1))  
+    logging.info(f"✅ Final shape after merging all features: {df_merged.shape}")
+    logging.debug(f"{df_merged.head(1)}")
 
-    # Optionally drop 'TARGET' if it appears
+    # Drop 'TARGET' if it appears
     if "TARGET" in df_merged.columns:
         df_merged.drop(columns=["TARGET"], inplace=True)
 

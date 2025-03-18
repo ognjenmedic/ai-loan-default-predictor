@@ -1,5 +1,11 @@
 import pandas as pd
 import numpy as np
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 def aggregate_numeric_features(df_previous_application):
     """
@@ -21,6 +27,8 @@ def aggregate_numeric_features(df_previous_application):
     agg_numeric.columns = ['previous_app_agg_' + '_'.join(col) for col in agg_numeric.columns]
     agg_numeric.reset_index(inplace=True)
     
+    logging.info(f"✅ Aggregated numeric features. Shape: {agg_numeric.shape}")
+    
     return agg_numeric
 
 def aggregate_categorical_features(df_previous_application):
@@ -38,8 +46,11 @@ def aggregate_categorical_features(df_previous_application):
         )
         agg_categorical.columns = ['previous_app_agg_' + col + '_most_frequent' for col in agg_categorical.columns]
         agg_categorical.reset_index(inplace=True)
+        
+        logging.info(f"✅ Aggregated categorical features. Shape: {agg_categorical.shape}")
         return agg_categorical
     else:
+        logging.warning("⚠️ No categorical features found for aggregation.")
         return None
 
 def merge_aggregated_features(agg_numeric, agg_categorical):
@@ -48,23 +59,24 @@ def merge_aggregated_features(agg_numeric, agg_categorical):
     """
     if agg_categorical is not None:
         merged = agg_numeric.merge(agg_categorical, on='SK_ID_CURR', how='left')
+        logging.info(f"✅ Merged numeric and categorical aggregates. Final shape: {merged.shape}")
     else:
         merged = agg_numeric
     return merged
 
 def safe_merge(df_main, df_new, merge_on="SK_ID_CURR", name=""):
     """
-    Merge two DataFrames on the specified key and print debugging information.
+    Merge two DataFrames on the specified key and log debugging information.
     """
     prev_shape = df_main.shape
     df_main = df_main.merge(df_new, on=merge_on, how='left')
     
-    print(f"✅ Merged {name}: {prev_shape} -> {df_main.shape}")
+    logging.info(f"✅ Merged {name}: {prev_shape} -> {df_main.shape}")
+
     missing_values = df_main.isnull().sum()
     missing_values = missing_values[missing_values > 0]
     if not missing_values.empty:
-        print(f"🛠️ Missing Values in {name} After Merge:\n{missing_values}")
-    print("-" * 50)
+        logging.warning(f"🛠️ Missing Values in {name} After Merge:\n{missing_values}")
     
     return df_main
 
@@ -85,6 +97,9 @@ def aggregate_previous_application_features(df_previous_application, additional_
     Returns:
       The final aggregated previous application DataFrame.
     """
+
+    logging.info("🔄 Starting aggregation for previous application features...")
+
     # Step 1: Aggregate numeric features
     agg_numeric = aggregate_numeric_features(df_previous_application)
     
@@ -93,7 +108,7 @@ def aggregate_previous_application_features(df_previous_application, additional_
     
     # Step 3: Merge numeric and categorical aggregates
     df_aggregated = merge_aggregated_features(agg_numeric, agg_categorical)
-    print(f"✅ Aggregation complete. New df_previous_application_aggregated shape: {df_aggregated.shape}")
+    logging.info(f"✅ Aggregation complete. New df_previous_application_aggregated shape: {df_aggregated.shape}")
     
     # Step 4: Merge in each additional engineered feature DataFrame
     for df_new, name in additional_feature_dfs:
@@ -105,29 +120,31 @@ def aggregate_previous_application_features(df_previous_application, additional_
     if "previous_app_STD_APPROVED_AMOUNT" in df_aggregated.columns:
         df_aggregated["previous_app_STD_APPROVED_AMOUNT"] = df_aggregated["previous_app_STD_APPROVED_AMOUNT"].fillna(0)
     
+    logging.info(f"✅ Final previous application feature set shape: {df_aggregated.shape}")
+
     # Step 6: Sanity checks
     missing_values = df_aggregated.isna().sum()
     missing_values = missing_values[missing_values > 0]
-    print("\n🔍 Standard Missing Values in Aggregated Previous Application Features After Merging:")
+    logging.info("\n🔍 Checking for missing values in aggregated features...")
     if missing_values.empty:
-        print("✅ No standard NaN values detected.")
+        logging.info("✅ No standard NaN values detected.")
     else:
-        print(missing_values)
+        logging.warning(f"🛠️ Missing Values:\n{missing_values}")
     
     hidden_nans = (df_aggregated == "").sum() + (df_aggregated == "nan").sum()
     hidden_nans = hidden_nans[hidden_nans > 0]
-    print("\n🔍 Hidden NaNs in Aggregated Previous Application Features After Merging:")
+    logging.info("\n🔍 Checking for hidden NaNs in aggregated features...")
     if hidden_nans.empty:
-        print("✅ No hidden NaNs detected.")
+        logging.info("✅ No hidden NaNs detected.")
     else:
-        print(hidden_nans)
+        logging.warning(f"🛠️ Hidden NaNs:\n{hidden_nans}")
     
     inf_values = df_aggregated.replace([np.inf, -np.inf], np.nan).isna().sum()
     inf_values = inf_values[inf_values > 0]
-    print("\n🔍 Infinite Values in Aggregated Previous Application Features After Merging:")
+    logging.info("\n🔍 Checking for infinite values in aggregated features...")
     if inf_values.empty:
-        print("✅ No Inf values detected.")
+        logging.info("✅ No Inf values detected.")
     else:
-        print(inf_values)
+        logging.warning(f"🛠️ Infinite Values:\n{inf_values}")
     
     return df_aggregated

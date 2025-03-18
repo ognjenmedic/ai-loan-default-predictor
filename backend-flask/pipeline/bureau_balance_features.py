@@ -1,5 +1,11 @@
 import pandas as pd
 import numpy as np
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 def compute_bureau_balance_credit_activity(df_bureau_balance):
     """
@@ -76,6 +82,9 @@ def generate_bureau_balance_features(df_bureau_balance):
     Returns:
       A DataFrame with all engineered bureau_balance features keyed by SK_ID_BUREAU.
     """
+
+    logging.info("Starting bureau balance feature computation...")
+
     # Compute each feature set
     credit_activity = compute_bureau_balance_credit_activity(df_bureau_balance)
     time_features = compute_bureau_balance_time_features(df_bureau_balance)
@@ -87,5 +96,7 @@ def generate_bureau_balance_features(df_bureau_balance):
     df_features = features_list[0]
     for features in features_list[1:]:
         df_features = df_features.merge(features, on="SK_ID_BUREAU", how="left")
+
+    logging.info(f"✅ Bureau balance features generated. Shape: {df_features.shape}")
     
     return df_features

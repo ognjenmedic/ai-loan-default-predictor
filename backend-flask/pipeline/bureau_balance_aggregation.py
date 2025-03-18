@@ -1,5 +1,12 @@
 import pandas as pd
 import numpy as np
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 
 def aggregate_numeric_features(df_bureau_balance):
     """
@@ -49,17 +56,17 @@ def merge_aggregated_features(agg_numeric, agg_categorical):
 
 def safe_merge(df_main, df_new, merge_on="SK_ID_BUREAU", name=""):
     """
-    Merge two DataFrames on the given key and print debugging information.
+    Merge two DataFrames on the given key and log debugging information.
     """
     prev_shape = df_main.shape
     df_main = df_main.merge(df_new, on=merge_on, how="left")
     
-    print(f"✅ Merged {name}: {prev_shape} -> {df_main.shape}")
+    logging.info(f"✅ Merged {name}: {prev_shape} -> {df_main.shape}")
     missing = df_main.isnull().sum()
     missing = missing[missing > 0]
     if not missing.empty:
-        print(f"🛠️ Missing Values in {name} After Merge:\n{missing}")
-    print("-" * 50)
+        logging.warning(f"🛠️ Missing Values in {name} After Merge:\n{missing}")
+    logging.info("-" * 50)
     
     return df_main
 
@@ -88,7 +95,7 @@ def aggregate_bureau_balance_features(df_bureau_balance, additional_feature_dfs)
     
     # Step 3: Merge numeric and categorical aggregates.
     df_aggregated = merge_aggregated_features(agg_numeric, agg_categorical)
-    print(f"✅ Aggregation complete. New df_bureau_balance_aggregated shape: {df_aggregated.shape}")
+    logging.info(f"✅ Aggregation complete. New df_bureau_balance_aggregated shape: {df_aggregated.shape}")
     
     # Step 4: Merge in each additional engineered feature DataFrame.
     for df_new, name in additional_feature_dfs:
@@ -97,21 +104,29 @@ def aggregate_bureau_balance_features(df_bureau_balance, additional_feature_dfs)
     # Step 5: Sanity checks for missing values, hidden NaNs, and infinite values.
     missing_values = df_aggregated.isna().sum()
     missing_values = missing_values[missing_values > 0]
-    print("\n🔍 Standard Missing Values in Aggregated Bureau Balance Features After Merging:")
-    print(missing_values if not missing_values.empty else "✅ No standard NaN values detected.")
+    logging.info("\n🔍 Standard Missing Values in Aggregated Bureau Balance Features After Merging:")
+    if not missing_values.empty:
+        logging.warning(missing_values)
+    else:
+        logging.info("✅ No standard NaN values detected.")
+
     
     hidden_nans = (df_aggregated == "").sum() + (df_aggregated == "nan").sum()
     hidden_nans = hidden_nans[hidden_nans > 0]
-    print("\n🔍 Hidden NaNs in Aggregated Bureau Balance Features After Merging:")
-    print(hidden_nans if not hidden_nans.empty else "✅ No hidden NaNs detected.")
+    logging.info("\n🔍 Hidden NaNs in Aggregated Bureau Balance Features After Merging:")
+    if not hidden_nans.empty:
+        logging.warning(hidden_nans)
+    else:
+        logging.info("✅ No hidden NaNs detected.")
+
     
     inf_values = df_aggregated.replace([np.inf, -np.inf], np.nan).isna().sum()
     inf_values = inf_values[inf_values > 0]
-    print("\n🔍 Infinite Values in Aggregated Bureau Balance Features After Merging:")
+    logging.info("🔍 Infinite Values in Aggregated Bureau Balance Features After Merging:")
     if inf_values.empty:
-        print("✅ No Inf values detected.")
+        logging.info("✅ No Inf values detected.")
     else:
-        print(inf_values)
+        logging.warning(f"⚠️ Infinite values detected:\n{inf_values}")
     
     return df_aggregated
 
@@ -122,9 +137,10 @@ def final_aggregate_bureau_balance_by_sk_id_curr(df_bureau_balance_aggregated_wi
     2. Aggregates to a single row per SK_ID_CURR using min, max, mean, sum, etc.
     3. Returns a DataFrame keyed by SK_ID_CURR.
     """
-    print("Before final aggregation:")
-    print("Unique SK_ID_CURR:", df_bureau_balance_aggregated_with_curr['SK_ID_CURR'].nunique())
-    print("Total rows:", df_bureau_balance_aggregated_with_curr.shape[0])
+    logging.info("Before final aggregation:")
+    logging.info(f"Unique SK_ID_CURR: {df_bureau_balance_aggregated_with_curr['SK_ID_CURR'].nunique()}")
+    logging.info(f"Total rows: {df_bureau_balance_aggregated_with_curr.shape[0]}")
+
     
     # Example: convert columns that should be numeric
     cols_to_convert = ['bureau_balance_MAX_OVERDUE_STATUS']  # if you have a column like this
@@ -134,7 +150,7 @@ def final_aggregate_bureau_balance_by_sk_id_curr(df_bureau_balance_aggregated_wi
                 df_bureau_balance_aggregated_with_curr[col], errors='coerce'
             )
 
-    # Define your final aggregation dictionary (adjust as needed):
+    # Define final aggregation dictionary (adjust as needed):
     agg_dict_final = {
         # EXAMPLE: aggregated columns from the SK_ID_BUREAU-level step
         'bureau_balance_agg_MONTHS_BALANCE_mean': ['min', 'max', 'mean', 'sum'],
@@ -142,7 +158,7 @@ def final_aggregate_bureau_balance_by_sk_id_curr(df_bureau_balance_aggregated_wi
         'bureau_balance_agg_MONTHS_BALANCE_max':  ['min', 'max', 'mean', 'sum'],
         'bureau_balance_agg_MONTHS_BALANCE_min':  ['min', 'max', 'mean', 'sum'],
         
-        # If you have categorical columns aggregated at SK_ID_BUREAU level:
+        # If there are categorical columns aggregated at SK_ID_BUREAU level:
         'bureau_balance_agg_STATUS_most_frequent': lambda x: x.mode().iloc[0] if not x.mode().empty else x.iloc[0],
 
         # Example numeric columns from earlier feature engineering
@@ -175,8 +191,9 @@ def final_aggregate_bureau_balance_by_sk_id_curr(df_bureau_balance_aggregated_wi
     # Ensure SK_ID_CURR is integer
     df_bureau_balance_aggregated_with_curr_final['SK_ID_CURR'] = df_bureau_balance_aggregated_with_curr_final['SK_ID_CURR'].astype('int64')
 
-    print("\nAfter final aggregation:")
-    print("Unique SK_ID_CURR:", df_bureau_balance_aggregated_with_curr_final['SK_ID_CURR'].nunique())
-    print("Total rows:", df_bureau_balance_aggregated_with_curr_final.shape[0])
+    logging.info("\nAfter final aggregation:")
+    logging.info(f"Unique SK_ID_CURR: {df_bureau_balance_aggregated_with_curr_final['SK_ID_CURR'].nunique()}")
+    logging.info(f"Total rows: {df_bureau_balance_aggregated_with_curr_final.shape[0]}")
+
     
     return df_bureau_balance_aggregated_with_curr_final

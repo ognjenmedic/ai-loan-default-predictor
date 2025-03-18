@@ -1,9 +1,13 @@
 import pandas as pd
 import numpy as np
+import logging
 
-###############################################################################
-# 1) Row-Level: Creating DAYS_DECISION_BIN
-###############################################################################
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+# Row-Level: Creating DAYS_DECISION_BIN
 def add_days_decision_bin(df):
     """
     Replicates EDA step of binning DAYS_DECISION into 20 discrete bins.
@@ -17,16 +21,14 @@ def add_days_decision_bin(df):
     )
     return df
 
-###############################################################################
-# 2) Aggregator for DAYS_DECISION_BIN => mean, sum, max, min
-###############################################################################
+# Aggregator for DAYS_DECISION_BIN => mean, sum, max, min
 def compute_days_decision_bin_aggregates(df):
     """
     Aggregates DAYS_DECISION_BIN by SK_ID_CURR to create:
-      - previous_app_agg_DAYS_DECISION_BIN_mean
-      - previous_app_agg_DAYS_DECISION_BIN_sum
-      - previous_app_agg_DAYS_DECISION_BIN_max
-      - previous_app_agg_DAYS_DECISION_BIN_min
+      - previous_app_agg_DAYS_DECISION_BIN_mean: Average bin index per applicant
+      - previous_app_agg_DAYS_DECISION_BIN_sum: Sum of bin values
+      - previous_app_agg_DAYS_DECISION_BIN_max: Maximum bin index
+      - previous_app_agg_DAYS_DECISION_BIN_min: Minimum bin index
     """
     agg_df = (
         df.groupby("SK_ID_CURR")["DAYS_DECISION_BIN"]
@@ -44,13 +46,15 @@ def compute_days_decision_bin_aggregates(df):
     )
     return agg_df
 
-###############################################################################
-# 3) Existing Aggregator Functions
-###############################################################################
+
 def compute_previous_application_credit_activity(df):
     """
-    Groups by SK_ID_CURR and calculates credit activity features
-    (NUM_APPLICATIONS, NUM_APPROVED_LOANS, APPROVAL_RATE, etc.).
+    Groups by SK_ID_CURR and calculates credit activity features:
+      - Number of total applications
+      - Number of loans approved, refused, canceled, and unused offers
+      - Approval rate: percentage of approved applications
+      - Breakdown by contract types (Revolving, Cash, Consumer loans)
+      - Number of repeat customers
     """
     activity = df.groupby("SK_ID_CURR").agg(
         previous_app_NUM_APPLICATIONS=("SK_ID_PREV", "count"),
@@ -69,9 +73,10 @@ def compute_previous_application_credit_activity(df):
 def compute_previous_application_loan_amounts(df):
     """
     Groups by SK_ID_CURR and calculates loan amount stats:
-      - sums, means, max, min, std of AMT_APPLICATION, AMT_CREDIT
-      - previous_app_APPROVAL_AMOUNT_RATIO
-      - previous_app_APPLICATION_TO_CREDIT_RATIO
+      - Total, average, max, min, and std for application and approved amounts
+      - Approval-to-application ratio
+      - Application-to-credit ratio
+      - Total number of payments scheduled
     """
     amounts = df.groupby("SK_ID_CURR").agg(
         previous_app_TOTAL_APPLICATION_AMOUNT=("AMT_APPLICATION", "sum"),
@@ -106,9 +111,10 @@ def compute_previous_application_loan_amounts(df):
 def compute_previous_application_time_features(df):
     """
     Time-related features:
-      - previous_app_AVG_TIME_SINCE_APPLICATION, ...
-      - previous_app_TIME_SINCE_LAST_APPLICATION, ...
-      - previous_app_AVG_LOAN_DURATION, ...
+      - Average, max, and min time since last application
+      - Loan duration statistics
+      - Time to first scheduled payment
+      - Time remaining until last due date
     """
     time_feats = df.groupby("SK_ID_CURR").agg(
         previous_app_AVG_TIME_SINCE_APPLICATION=("DAYS_DECISION", lambda x: abs(x.mean()) / 365),
@@ -124,9 +130,9 @@ def compute_previous_application_time_features(df):
 def compute_previous_application_credit_overdue(df):
     """
     Overdue-related features:
-      - previous_app_NUM_OVERDUE_APPLICATIONS
-      - previous_app_TOTAL_OVERDUE_AMOUNT
-      - previous_app_PROPORTION_OVERDUE_APPLICATIONS
+      - `previous_app_NUM_OVERDUE_APPLICATIONS` → Count of overdue applications (DAYS_FIRST_DUE < 0).
+      - `previous_app_TOTAL_OVERDUE_AMOUNT` → Sum of overdue amounts (DAYS_LAST_DUE < 0).
+      - `previous_app_PROPORTION_OVERDUE_APPLICATIONS` → Proportion of overdue applications.
     """
     overdue = df.groupby("SK_ID_CURR").agg(
         previous_app_NUM_OVERDUE_APPLICATIONS=("DAYS_FIRST_DUE", lambda x: (x < 0).sum()),
@@ -138,10 +144,10 @@ def compute_previous_application_credit_overdue(df):
 def compute_previous_application_categorical_features(df):
     """
     Categorical aggregations:
-      - previous_app_PERCENT_APPROVED
-      - previous_app_MOST_COMMON_CONTRACT_TYPE
-      - previous_app_MOST_COMMON_LOAN_PURPOSE
-      - previous_app_HAS_REFUSALS
+      - `previous_app_PERCENT_APPROVED` → Percentage of approved applications.
+      - `previous_app_MOST_COMMON_CONTRACT_TYPE` → Most frequent loan contract type.
+      - `previous_app_MOST_COMMON_LOAN_PURPOSE` → Most frequent loan purpose.
+      - `previous_app_HAS_REFUSALS` → Binary flag (1 if applicant had a refused loan, else 0).
     """
     cat_feats = df.groupby("SK_ID_CURR").agg(
         previous_app_PERCENT_APPROVED=("NAME_CONTRACT_STATUS", lambda x: (x == "Approved").sum() / len(x)),
@@ -151,9 +157,7 @@ def compute_previous_application_categorical_features(df):
     ).reset_index()
     return cat_feats
 
-###############################################################################
-# 4) Master Function => 'generate_previous_application_features'
-###############################################################################
+
 def generate_previous_application_features(df_previous_application):
     """
     1) Add DAYS_DECISION_BIN (row-level).
@@ -166,6 +170,9 @@ def generate_previous_application_features(df_previous_application):
        - categorical_features
     4) Merge all on SK_ID_CURR => final DataFrame
     """
+
+    logging.info("Starting previous application feature computation...")
+
     # (1) Create the DAYS_DECISION_BIN column
     df_temp = add_days_decision_bin(df_previous_application)
 
@@ -193,4 +200,6 @@ def generate_previous_application_features(df_previous_application):
     for feat in features_list[1:]:
         df_final = df_final.merge(feat, on="SK_ID_CURR", how="left")
     
+    logging.info(f"✅ Previous application features generated. Final shape: {df_final.shape}")
+
     return df_final

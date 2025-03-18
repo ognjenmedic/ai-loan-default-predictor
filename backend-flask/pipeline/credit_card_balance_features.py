@@ -1,5 +1,11 @@
 import pandas as pd
 import numpy as np
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 def compute_credit_card_activity_features(df_credit_card_balance):
     """
@@ -100,6 +106,8 @@ def generate_credit_card_balance_features(df_credit_card_balance):
       - Categorical aggregation features
     Then it merges these DataFrames on SK_ID_CURR and returns the final feature DataFrame.
     """
+    logging.info("Starting credit card balance feature computation...")
+    
     # Compute individual feature sets
     activity_features = compute_credit_card_activity_features(df_credit_card_balance)
     loan_amount_features = compute_credit_card_loan_amount_features(df_credit_card_balance)
@@ -118,5 +126,7 @@ def generate_credit_card_balance_features(df_credit_card_balance):
     df_features = features_list[0]
     for df in features_list[1:]:
         df_features = df_features.merge(df, on="SK_ID_CURR", how="left")
+    
+    logging.info(f"✅ Credit card balance features generated. Shape: {df_features.shape}")
     
     return df_features
