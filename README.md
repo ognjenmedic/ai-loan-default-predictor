@@ -67,7 +67,7 @@ The app is designed to simulate a **real-world loan risk prediction tool**, allo
 
 ---
 
-## 🧪 Try It Yourself
+## Try It Yourself
 
 1. Go to the link above
 2. Fill out a sample application form
