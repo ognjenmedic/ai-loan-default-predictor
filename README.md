@@ -54,8 +54,6 @@ The app is designed to simulate a **real-world loan risk prediction tool**, allo
 
 ---
 
-## Demo
-
 ![Loan Prediction App Demo](./demo.gif)
 
 
