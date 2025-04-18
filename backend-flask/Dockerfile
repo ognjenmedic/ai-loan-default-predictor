@@ -3,7 +3,7 @@ FROM mambaorg/micromamba:1.5.0-jammy
 
 # Copy and install environment
 COPY environment.yml /tmp/environment.yml
-RUN micromamba install -y -n appenv -f /tmp/environment.yml \
+RUN micromamba create -y -n appenv -f /tmp/environment.yml \
     && micromamba clean --all --yes
 
 # Set working directory and activate env in shell
