@@ -1,29 +1,20 @@
-# ----------------------------
-#  FLASK BACKEND DOCKERFILE
-# ----------------------------
+# ---------- LOAN‑PREDICTOR BACKEND (Conda native) ----------
+FROM mambaorg/micromamba:1.5.0-jammy
 
-# 1) Use a lightweight Python image
-FROM python:3.9-slim
+# Copy and install environment
+COPY environment.yml /tmp/environment.yml
+RUN micromamba install -y -n appenv -f /tmp/environment.yml \
+    && micromamba clean --all --yes
 
-# 2) Set working directory
+# Set working directory and activate env in shell
 WORKDIR /app
+SHELL ["micromamba", "run", "-n", "appenv", "/bin/bash", "-c"]
 
-
-# Install system dependencies 
-RUN apt-get update && apt-get install -y libgomp1 && rm -rf /var/lib/apt/lists/*
-
-
-# 3) Copy requirements and install
-COPY requirements.txt .
-RUN pip install --upgrade pip \
-    && pip install gunicorn \
-    && pip install --no-cache-dir -r requirements.txt
-
-# 4) Copy application code
+# Copy app code
 COPY . .
 
-# 5) Expose the Flask port
+# Expose the Flask port
 EXPOSE 5001
 
-# 6) Start Flask app
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5001", "loan_predictor:app"]
+# Launch app with Gunicorn inside Conda env
+CMD ["micromamba", "run", "-n", "appenv", "gunicorn", "-w", "4", "-b", "0.0.0.0:5001", "loan_predictor:app"]
