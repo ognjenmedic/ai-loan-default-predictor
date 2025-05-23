@@ -1,0 +1,134 @@
+<div class="ai-loan-container">
+  <h2 class="ai-loan-title">AI Loan Default Predictor</h2>
+
+  <div class="ai-loan-content">
+    <!-- Loan Form -->
+    <form class="ai-loan-form" (ngSubmit)="predictLoan()">
+      <div class="form-field dropdown-container">
+        <label for="occupation">Occupation Type:</label>
+        <div class="custom-select-wrapper">
+          <select
+            id="occupation"
+            [(ngModel)]="formData.OCCUPATION_TYPE"
+            (ngModelChange)="triggerPredict()"
+            name="occupation"
+            required
+          >
+            <option *ngFor="let occupation of occupations" [value]="occupation">
+              {{ occupation }}
+            </option>
+          </select>
+          <svg
+            class="custom-dropdown-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 96 960 960"
+            width="24"
+          >
+            <path fill="white" d="M480 696 280 496h400L480 696Z" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="income">Monthly Income (USD):</label>
+        <input
+          id="income"
+          type="text"
+          [value]="formData.MONTHLY_INCOME | number : '1.0-0'"
+          (input)="updateNumber($event, 'MONTHLY_INCOME')"
+          name="income"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="loanAmount">Loan Amount (USD):</label>
+        <input
+          id="loanAmount"
+          type="text"
+          [value]="formData.LOAN_AMOUNT | number : '1.0-0'"
+          (input)="updateNumber($event, 'LOAN_AMOUNT')"
+          name="loanAmount"
+          required
+        />
+      </div>
+      <div *ngIf="dtiWarning" class="dti-warning">
+        {{ dtiWarning }}
+      </div>
+
+      <div class="form-field">
+        <label for="loanTerm">Loan Term (Months):</label>
+        <input
+          id="loanTerm"
+          type="number"
+          [value]="formData.loanTermMonths"
+          (input)="updateNumber($event, 'loanTermMonths')"
+          name="loanTerm"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="creditScore">External Credit Score:</label>
+        <input
+          id="creditScore"
+          type="number"
+          step="0.01"
+          [(ngModel)]="formData.EXTERNAL_CREDIT_SCORE"
+          (ngModelChange)="triggerPredict()"
+          name="creditScore"
+          required
+        />
+      </div>
+
+      <div class="ai-loan-buttons">
+        <button
+          type="button"
+          class="btn-secondary"
+          (click)="generateDummyData()"
+        >
+          Generate Test Data
+        </button>
+        <button type="submit" class="btn-primary" [disabled]="isDTITooHigh()">
+          Predict Default
+        </button>
+      </div>
+    </form>
+
+    <!-- Prediction Result -->
+    <div
+      *ngIf="predictionResult && !isLoading"
+      #predictionOutput
+      class="prediction-output"
+    >
+      <h3 class="prediction-title">Prediction Result</h3>
+      <p class="prediction-text">
+        <strong>Default Probability:</strong>
+        <span
+          [ngClass]="{
+            'high-risk': getProbabilityNumber() > 50,
+            'low-risk': getProbabilityNumber() <= 50
+          }"
+        >
+          {{ predictionResult?.formatted_probability }}
+        </span>
+      </p>
+      <p class="prediction-text">
+        <strong>Prediction:</strong>
+        {{
+          predictionResult?.prediction === 1
+            ? "High Risk (Default Likely)"
+            : "Low Risk (Default Unlikely)"
+        }}
+      </p>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loader-container">
+      <div class="dot dot1"></div>
+      <div class="dot dot2"></div>
+      <div class="dot dot3"></div>
+    </div>
+  </div>
+</div>

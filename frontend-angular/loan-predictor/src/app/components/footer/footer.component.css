@@ -1,0 +1,30 @@
+.footer-container {
+  padding: 20px 40px 50px 40px;
+  border-top: 1px solid #374151;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 40px;
+  text-decoration: none;
+  align-items: center;
+  cursor: pointer;
+  color: #98a0a9;
+}
+
+.footer-item.active {
+  color: white;
+}
+
+.footer-item:hover {
+  color: white;
+}
+
+.footer-item .item-text {
+  font-size: 14px;
+  font-weight: 500;
+}

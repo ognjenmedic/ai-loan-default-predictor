@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>LoanPredictor</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <script>
+      // Helper to inject GA scripts
+      function loadGoogleAnalytics() {
+        console.log("Injecting Google Analytics...");
+        var gaScript = document.createElement("script");
+        gaScript.src =
+          "https://www.googletagmanager.com/gtag/js?id=G-QG6DRPEVWV";
+        gaScript.async = true;
+        document.head.appendChild(gaScript);
+
+        var inlineScript = document.createElement("script");
+        inlineScript.innerHTML = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-QG6DRPEVWV');
+      `;
+        document.head.appendChild(inlineScript);
+      }
+
+      // Called once Termly is loaded
+      function onTermlyLoaded() {
+        // On initialization
+        Termly.on("initialized", function (data) {
+          console.log("Termly CMP initialized:", data);
+          const consentState =
+            Termly.getConsentState && Termly.getConsentState();
+          if (consentState && consentState.analytics) {
+            loadGoogleAnalytics();
+          }
+        });
+
+        // On consent changes
+        Termly.on("consent", function (data) {
+          console.log("User consent updated:", data);
+          const consentState =
+            Termly.getConsentState && Termly.getConsentState();
+          if (consentState && consentState.analytics) {
+            loadGoogleAnalytics();
+          }
+        });
+      }
+    </script>
+
+    <!-- Termly Banner Script -->
+    <script
+      type="text/javascript"
+      src="https://app.termly.io/resource-blocker/81aebb30-b060-41df-b590-c3e3a407f2b8"
+      onload="onTermlyLoaded()"
+    ></script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

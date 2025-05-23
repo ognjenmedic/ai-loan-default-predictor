@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend-flask
+    ports:
+      - "5001:5001"
+    restart: always
+    env_file:
+      - backend-flask/.env
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend-angular/loan-predictor
+    ports:
+      - "80:80"
+    restart: always
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
+    driver: bridge

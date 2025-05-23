@@ -1,0 +1,45 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  padding-top: 30px;
+  padding-bottom: 60px;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 10px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttons a {
+  display: inline-block;
+  min-width: 100px;
+  background: #38a169;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  transition: background 0.3s ease-in-out;
+  flex: 1;
+  max-width: 250px;
+}
+
+.buttons a:hover {
+  background: #388e3c;
+}
+
+@media (max-width: 768px) {
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .buttons a {
+    width: 100%;
+    max-width: 90%;
+  }
+}

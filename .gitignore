@@ -1,0 +1,50 @@
+# === PYTHON / FLASK ===
+
+# Virtual environment
+venv/
+.env
+*.env
+*.pyc
+__pycache__/
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Logs and configs
+logs/
+*.log
+
+# IDE/editor junk
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Model files and large data artifacts
+*.pkl
+*.h5
+*.pt
+*.ckpt
+*.joblib
+
+
+# === ANGULAR ===
+
+# Node modules
+frontend-angular/node_modules/
+
+# Build output
+frontend-angular/dist/
+frontend-angular/out-tsc/
+
+# Temp and cache
+frontend-angular/.tmp/
+frontend-angular/coverage/
+frontend-angular/npm-debug.log*
+frontend-angular/yarn-debug.log*
+frontend-angular/yarn-error.log*
+frontend-angular/.angular/
+frontend-angular/*.tsbuildinfo
+frontend-angular/.eslintcache

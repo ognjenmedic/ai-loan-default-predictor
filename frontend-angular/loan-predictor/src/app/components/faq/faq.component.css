@@ -1,0 +1,75 @@
+p {
+  margin-bottom: 20px;
+  font-size: 18px;
+  line-height: 163%;
+  color: #e5e5e5;
+}
+
+li {
+  margin-bottom: 20px;
+  font-size: 18px;
+  line-height: 163%;
+  color: #e5e5e5;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.text-container {
+  max-width: 800px;
+  margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.project-heading,
+.project-subheading {
+  margin-bottom: 30px;
+}
+
+.space-divider {
+  height: 20px;
+}
+
+.project-list {
+  margin: 1em 0;
+  padding: 0 1.5em;
+}
+
+.project-list > li {
+  margin-bottom: 1em;
+  line-height: 170%;
+}
+
+.project-list ul {
+  list-style-type: disc;
+  margin-left: 1.5em;
+}
+
+.project-list ol {
+  list-style-type: decimal;
+  margin-left: 1.5em;
+}
+
+.project-list ul li {
+  margin-bottom: 0.5em;
+}
+
+.project-list a {
+  color: white;
+  text-decoration: none;
+}
+
+.project-list a:hover {
+  text-decoration: underline;
+  color: white;
+}
