@@ -10,6 +10,8 @@ from scipy.stats import truncnorm
 import logging
 from pandas.api.types import CategoricalDtype 
 from pipeline.orchestrator import orchestrate_features
+import shap
+
 
 logging.basicConfig(
     level=logging.INFO, 
@@ -32,6 +34,9 @@ CATEGORY_MAPPINGS = metadata.get("category_mappings", {})
 
 with open("models/lightgbm_loan_default.pkl", "rb") as f:
     model = pickle.load(f)
+
+explainer = shap.TreeExplainer(model) 
+
 
 def enforce_dtypes(df):
     """
@@ -84,6 +89,26 @@ def safe_fill(df):
             df[col] = df[col].fillna(0)
     return df
 
+
+def get_shap_explanations(df_row: pd.DataFrame):
+    shap_vals = explainer.shap_values(df_row, check_additivity=False)
+    contribs   = shap_vals[1][0] if isinstance(shap_vals, list) else shap_vals[0]
+
+    top_idx = np.argsort(np.abs(contribs))[::-1][:3]
+    return [
+        {
+            "feature": feat,
+            "value": str(df_row.iloc[0, idx]),
+            "impact": float(contribs[idx]),
+            "direction": "increased risk" if contribs[idx] > 0 else "reduced risk"
+        }
+        for idx, feat in zip(top_idx, df_row.columns[top_idx])
+    ]
+    return explanations
+
+
+
+
 @app.route("/api/predict", methods=["POST"])
 def predict():
     try:
@@ -111,11 +136,15 @@ def predict():
 
         logging.info(f"✅ Prediction: {label}  (p = {proba:.3f})")
 
+        explanations = get_shap_explanations(input_df)
+
         return jsonify({
             "prediction": label,
             "probability": proba,
-            "formatted_probability": f"{proba*100:.2f}%"
+            "formatted_probability": f"{proba*100:.2f}%",
+            "explanations": explanations
         })
+
 
     except Exception as e:
         logging.error("❌ Prediction error", exc_info=True)

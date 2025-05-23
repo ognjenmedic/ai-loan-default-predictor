@@ -203,6 +203,26 @@ select:focus {
   animation-delay: 0.6s;
 }
 
+.prediction-explanations {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #1f2937;
+  border-left: 4px solid #4ade80;
+  color: #e5e7eb;
+  font-size: 0.95rem;
+  border-radius: 8px;
+}
+
+.explanation-list {
+  list-style: disc;
+  margin-left: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.explanation-list li {
+  margin: 0.25rem 0;
+}
+
 @keyframes bounce {
   0%,
   80%,

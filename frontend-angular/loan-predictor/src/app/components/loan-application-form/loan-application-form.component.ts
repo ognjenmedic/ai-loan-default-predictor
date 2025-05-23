@@ -139,7 +139,7 @@ export class LoanApplicationFormComponent implements OnInit {
         this.predictionResultSection.nativeElement.getBoundingClientRect().top +
         window.scrollY;
 
-      const offset = 600;
+      const offset = 550;
 
       window.scrollTo({
         top: elementY - offset,

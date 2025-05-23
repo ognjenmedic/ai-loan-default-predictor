@@ -122,6 +122,22 @@
             : "Low Risk (Default Unlikely)"
         }}
       </p>
+      <div
+        class="prediction-explanations"
+        *ngIf="predictionResult?.explanations?.length"
+      >
+        <p class="prediction-text">
+          <strong>Top Factors Influencing the Prediction:</strong>
+        </p>
+        <ul class="explanation-list">
+          <li *ngFor="let explanation of predictionResult.explanations">
+            <strong>{{ explanation.feature }}:</strong>
+            Value = {{ explanation.value }}, Impact =
+            {{ explanation.impact | number : "1.2-2" }},
+            <em>{{ explanation.direction }}</em>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- Loading Indicator -->
