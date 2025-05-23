@@ -23,6 +23,7 @@ RAW_SCHEMA = {
         "NUM_CHILDREN",
         "MONTHLY_INCOME",
         "LOAN_AMOUNT",
+        "LOAN_TERM_MONTHS", 
         "LOAN_ANNUITY",
         "PURCHASED_GOODS_VALUE",
         "ACCOMPANIED_BY",
@@ -365,3 +366,106 @@ DEFAULT_CATS = {
     "PRODUCT_BUNDLE_TYPE":      ["Combo A", "Combo B", "Combo C"],
     "IS_INSURED_ON_APPROVAL":   ["Y", "N"]
 }
+
+DOMAIN_OVERRIDES = {
+    # Income & Credit Features
+    "MONTHLY_INCOME": {
+        "min": 1000,
+        "max": 10000,
+        "mean": 4000,
+        "std": 2000
+    },
+    "LOAN_AMOUNT": {
+        "min": 5000,
+        "max": 150000,
+        "mean": 30000,
+        "std": 20000
+    },
+    "LOAN_ANNUITY": {
+        "min": 200,
+        "max": 5000,
+        "mean": 1200,
+        "std": 700
+    },
+    "LOAN_TERM_MONTHS": {
+        "min": 6,
+        "max": 72,
+        "mean": 36,
+        "std": 15
+    },
+
+    # Demographics & Realism Fixes
+    "NUM_CHILDREN": {
+        "min": 0,
+        "max": 6,
+        "mean": 1.5,
+        "std": 1.2
+    },
+    "NUM_FAMILY_MEMBERS": {
+        "min": 1,
+        "max": 10,
+        "mean": 3.5,
+        "std": 1.5
+    },
+
+    # Dates and Durations
+    "AGE_DAYS": {
+        "min": -25550,   # 70 years
+        "max": -6570,    # 18 years
+        "mean": -14600,  # 40 years
+        "std": 3300
+    },
+    "EMPLOYMENT_DURATION_DAYS": {
+        "min": -14600,   # 40 years
+        "max": -30,      # 1 month
+        "mean": -3650,   # 10 years
+        "std": 2000
+    },
+    "APPLICATION_HOUR": {
+        "min": 0,
+        "max": 23,
+        "mean": 13,
+        "std": 5
+    },
+
+    # Housing / Property
+    "MAX_FLOORS_AVG": {
+        "min": 1,
+        "max": 30,
+        "mean": 5,
+        "std": 4
+    },
+    "MAX_FLOORS_MODE": {
+        "min": 1,
+        "max": 30,
+        "mean": 5,
+        "std": 4
+    },
+    "MAX_FLOORS_MEDIAN": {
+        "min": 1,
+        "max": 30,
+        "mean": 5,
+        "std": 4
+    },
+    "PROPERTY_TOTAL_AREA": {
+        "min": 30,
+        "max": 300,
+        "mean": 90,
+        "std": 50
+    },
+
+    # Credit Scores
+    "EXTERNAL_CREDIT_SCORE": {
+        "min": 0.0,
+        "max": 1.0,
+        "mean": 0.5,
+        "std": 0.2
+    },
+    "SECONDARY_CREDIT_SCORE": {
+        "min": 0.0,
+        "max": 1.0,
+        "mean": 0.6,
+        "std": 0.15
+    }
+}
+

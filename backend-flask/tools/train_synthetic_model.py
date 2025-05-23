@@ -122,6 +122,7 @@ nan_cols = [c for c in df.columns if df[c].isna().all()]
 if nan_cols:
     df.drop(columns=nan_cols, inplace=True)
 
+
 # -------------------------------------------------
 # 3-A. Build a weak, plausible TARGET
 # -------------------------------------------------
@@ -161,7 +162,13 @@ prob = (
 # 4) Draw the synthetic binary target
 df["TARGET"] = np.random.binomial(1, prob)
 
+# ✅ Run diagnostics after TARGET exists
+print("\n📊 Value counts of EXTERNAL_CREDIT_SCORE:")
+print(df["EXTERNAL_CREDIT_SCORE"].value_counts(dropna=False).head())
 
+df["ext_zero"] = (df["EXTERNAL_CREDIT_SCORE"] == 0).astype(int)
+print("\n📈 TARGET default rate by EXTERNAL_CREDIT_SCORE == 0:")
+print(df.groupby("ext_zero")["TARGET"].mean())
 
 # -------------------------------------------------
 # 3-B. Train / Validate Model

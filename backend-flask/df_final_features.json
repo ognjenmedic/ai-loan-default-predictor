@@ -8,6 +8,7 @@
     "NUM_CHILDREN",
     "MONTHLY_INCOME",
     "LOAN_AMOUNT",
+    "LOAN_TERM_MONTHS",
     "LOAN_ANNUITY",
     "PURCHASED_GOODS_VALUE",
     "ACCOMPANIED_BY",
@@ -49,7 +50,6 @@
     "MAX_FLOORS_MEDIAN",
     "PROPERTY_TOTAL_AREA",
     "DAYS_SINCE_LAST_PHONE_CHANGE",
-    "LOAN_TERM_MONTHS",
     "credit_summary_agg_DAYS_SINCE_CREDIT_ISSUED_mean",
     "credit_summary_agg_DAYS_SINCE_CREDIT_ISSUED_sum",
     "credit_summary_agg_DAYS_SINCE_CREDIT_ISSUED_max",
@@ -483,7 +483,8 @@
     "installments_MEAN_PAYMENT_DELAY_y",
     "installments_STD_PAYMENT_DELAY",
     "installments_NUM_LATE_PAYMENTS",
-    "installments_LATE_PAYMENT_RATIO"
+    "installments_LATE_PAYMENT_RATIO",
+    "ext_zero"
   ],
   "dtypes": {
     "CUSTOMER_ID": "Int64",
@@ -494,6 +495,7 @@
     "NUM_CHILDREN": "float64",
     "MONTHLY_INCOME": "float64",
     "LOAN_AMOUNT": "float64",
+    "LOAN_TERM_MONTHS": "float64",
     "LOAN_ANNUITY": "float64",
     "PURCHASED_GOODS_VALUE": "float64",
     "ACCOMPANIED_BY": "category",
@@ -535,7 +537,6 @@
     "MAX_FLOORS_MEDIAN": "float64",
     "PROPERTY_TOTAL_AREA": "float64",
     "DAYS_SINCE_LAST_PHONE_CHANGE": "float64",
-    "LOAN_TERM_MONTHS": "float64",
     "credit_summary_agg_DAYS_SINCE_CREDIT_ISSUED_mean": "float64",
     "credit_summary_agg_DAYS_SINCE_CREDIT_ISSUED_sum": "float64",
     "credit_summary_agg_DAYS_SINCE_CREDIT_ISSUED_max": "float64",
@@ -969,7 +970,8 @@
     "installments_MEAN_PAYMENT_DELAY_y": "float64",
     "installments_STD_PAYMENT_DELAY": "float64",
     "installments_NUM_LATE_PAYMENTS": "float64",
-    "installments_LATE_PAYMENT_RATIO": "float64"
+    "installments_LATE_PAYMENT_RATIO": "float64",
+    "ext_zero": "int64"
   },
   "category_mappings": {
     "LOAN_CONTRACT_TYPE": [

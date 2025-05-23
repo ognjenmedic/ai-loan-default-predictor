@@ -10,6 +10,7 @@ from scipy.stats import truncnorm
 import logging
 from pandas.api.types import CategoricalDtype 
 from pipeline.orchestrator import orchestrate_features
+from tools.feature_config import DOMAIN_OVERRIDES
 import shap
 
 
@@ -222,6 +223,14 @@ def generate_dummy():
             col_mean = stats.get("mean", (col_max + col_min) / 2)  # fallback
             col_std = stats.get("std", max((col_max - col_min) / 4, 1e-6))  # avoid zero std
 
+            # Patch values if in DOMAIN_OVERRIDES
+            override = DOMAIN_OVERRIDES.get(feature_name)
+            if override:
+                col_min = override.get("min", col_min)
+                col_max = override.get("max", col_max)
+                col_mean = override.get("mean", col_mean)
+                col_std = override.get("std", col_std)
+
             # 1) Handle money fields with log-normal sampling
             if feature_name in money_fields and col_mean > 0:
                 sigma = 0.3
@@ -335,7 +344,6 @@ def generate_dummy():
     except Exception as e:
         logging.error(f"❌ Error generating dummy data: {str(e)}", exc_info=True)
         return jsonify({"error": str(e)}), 500
-
 
 
 # Run Flask

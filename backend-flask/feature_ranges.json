@@ -3,18 +3,18 @@
     "CUSTOMER_ID": {
       "feature_name": "CUSTOMER_ID",
       "dtype": "int64",
-      "min": -345.0,
-      "max": 354.0,
-      "mean": 2.007,
-      "std": 102.66583279857143
+      "min": -320.0,
+      "max": 360.0,
+      "mean": -1.7647058823529411,
+      "std": 97.4526760640412
     },
     "TARGET": {
       "feature_name": "TARGET",
       "dtype": "Int64",
-      "min": -623.0,
-      "max": 690.0,
-      "mean": -48.116,
-      "std": 187.9748948798884
+      "min": -300.0,
+      "max": 329.0,
+      "mean": -1.0019607843137255,
+      "std": 98.29857780510766
     },
     "LOAN_CONTRACT_TYPE": {
       "feature_name": "LOAN_CONTRACT_TYPE",
@@ -51,10 +51,10 @@
     "NUM_CHILDREN": {
       "feature_name": "NUM_CHILDREN",
       "dtype": "Int64",
-      "min": -300.0,
-      "max": 300.0,
-      "mean": -4.29,
-      "std": 96.86559163522847
+      "min": 0,
+      "max": 6,
+      "mean": 1.5,
+      "std": 1.2
     },
     "MONTHLY_INCOME": {
       "feature_name": "MONTHLY_INCOME",
@@ -72,6 +72,14 @@
       "mean": 30000,
       "std": 20000
     },
+    "LOAN_TERM_MONTHS": {
+      "feature_name": "LOAN_TERM_MONTHS",
+      "dtype": "Int64",
+      "min": 6,
+      "max": 72,
+      "mean": 36,
+      "std": 15
+    },
     "LOAN_ANNUITY": {
       "feature_name": "LOAN_ANNUITY",
       "dtype": "float64",
@@ -83,10 +91,10 @@
     "PURCHASED_GOODS_VALUE": {
       "feature_name": "PURCHASED_GOODS_VALUE",
       "dtype": "float64",
-      "min": -3.655086515104106,
-      "max": 3.3806144890575767,
-      "mean": -0.009538245069146183,
-      "std": 0.9971099977163043
+      "min": -3.6315388139245943,
+      "max": 2.9427526460054367,
+      "mean": 0.04697734624788325,
+      "std": 1.0323960188024726
     },
     "ACCOMPANIED_BY": {
       "feature_name": "ACCOMPANIED_BY",
@@ -141,41 +149,41 @@
       "feature_name": "REGION_POPULATION_RATIO",
       "dtype": "float64",
       "min": -3.4360623896680225,
-      "max": 3.0016686377903152,
-      "mean": 0.004625200913203712,
-      "std": 1.0087767999624033
+      "max": 3.285723713681842,
+      "mean": 0.03649762029193305,
+      "std": 1.0341489198742184
     },
     "AGE_DAYS": {
       "feature_name": "AGE_DAYS",
       "dtype": "int64",
-      "min": -309.0,
-      "max": 328.0,
-      "mean": 0.879,
-      "std": 101.67899969009324
+      "min": -25550,
+      "max": -6570,
+      "mean": -14600,
+      "std": 3300
     },
     "EMPLOYMENT_DURATION_DAYS": {
       "feature_name": "EMPLOYMENT_DURATION_DAYS",
       "dtype": "int64",
-      "min": -339.0,
-      "max": 448.0,
-      "mean": 2.316,
-      "std": 100.75928034963617
+      "min": -14600,
+      "max": -30,
+      "mean": -3650,
+      "std": 2000
     },
     "DAYS_SINCE_REGISTRATION": {
       "feature_name": "DAYS_SINCE_REGISTRATION",
       "dtype": "float64",
-      "min": -6.865339081780641,
-      "max": 7.021820797777216,
-      "mean": 0.05382659658794704,
-      "std": 2.1303602156823827
+      "min": -3.3078999524973884,
+      "max": 3.1580734261856236,
+      "mean": -0.005025973731310655,
+      "std": 0.952988935640824
     },
     "DAYS_SINCE_ID_ISSUE": {
       "feature_name": "DAYS_SINCE_ID_ISSUE",
       "dtype": "int64",
-      "min": -345.0,
-      "max": 310.0,
-      "mean": 2.647,
-      "std": 98.16852576284545
+      "min": -295.0,
+      "max": 360.0,
+      "mean": -2.4941176470588236,
+      "std": 100.78239057472642
     },
     "HAS_MOBILE": {
       "feature_name": "HAS_MOBILE",
@@ -245,26 +253,26 @@
     "NUM_FAMILY_MEMBERS": {
       "feature_name": "NUM_FAMILY_MEMBERS",
       "dtype": "Int64",
-      "min": -285.0,
-      "max": 278.0,
-      "mean": -1.053,
-      "std": 96.17889878539664
+      "min": 1,
+      "max": 10,
+      "mean": 3.5,
+      "std": 1.5
     },
     "REGION_SCORE": {
       "feature_name": "REGION_SCORE",
       "dtype": "Int64",
-      "min": -386.0,
-      "max": 316.0,
-      "mean": -3.009,
-      "std": 101.77492350306167
+      "min": -688.0,
+      "max": 685.0,
+      "mean": -51.19019607843137,
+      "std": 200.0894576723131
     },
     "REGION_CITY_SCORE": {
       "feature_name": "REGION_CITY_SCORE",
       "dtype": "Int64",
-      "min": -746.0,
-      "max": 637.0,
-      "mean": 49.871,
-      "std": 201.02566920340965
+      "min": -386.0,
+      "max": 268.0,
+      "mean": -1.5637254901960784,
+      "std": 98.33590296237709
     },
     "APPLICATION_DAY_OF_WEEK": {
       "feature_name": "APPLICATION_DAY_OF_WEEK",
@@ -280,10 +288,10 @@
     "APPLICATION_HOUR": {
       "feature_name": "APPLICATION_HOUR",
       "dtype": "int64",
-      "min": -430.0,
-      "max": 296.0,
-      "mean": 0.437,
-      "std": 107.027131316493
+      "min": 0,
+      "max": 23,
+      "mean": 13,
+      "std": 5
     },
     "RESIDES_IN_REGISTERED_REGION": {
       "feature_name": "RESIDES_IN_REGISTERED_REGION",
@@ -347,90 +355,82 @@
     "EXTERNAL_CREDIT_SCORE": {
       "feature_name": "EXTERNAL_CREDIT_SCORE",
       "dtype": "float64",
-      "min": -7.77172280661244,
-      "max": 6.489389335974345,
-      "mean": -0.5187577813764018,
-      "std": 2.1040340387174443
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.5,
+      "std": 0.2
     },
     "SECONDARY_CREDIT_SCORE": {
       "feature_name": "SECONDARY_CREDIT_SCORE",
       "dtype": "float64",
-      "min": -3.0185567705677925,
-      "max": 3.6028321358108735,
-      "mean": 0.06875234040630414,
-      "std": 0.9899211959931153
+      "min": 0.0,
+      "max": 1.0,
+      "mean": 0.6,
+      "std": 0.15
     },
     "BUILD_YEAR_AVG": {
       "feature_name": "BUILD_YEAR_AVG",
       "dtype": "float64",
-      "min": -3.2369936930968692,
-      "max": 3.6916245011978046,
-      "mean": 0.02908406325201024,
-      "std": 0.9834962309668639
+      "min": -6.99298629552982,
+      "max": 5.80979057898384,
+      "mean": 0.48342169550520386,
+      "std": 1.9611601360547928
     },
     "MAX_FLOORS_AVG": {
       "feature_name": "MAX_FLOORS_AVG",
       "dtype": "float64",
-      "min": -2.968368430235852,
-      "max": 2.684426782495735,
-      "mean": -0.01151089649790365,
-      "std": 0.9905158041981248
+      "min": 1,
+      "max": 30,
+      "mean": 5,
+      "std": 4
     },
     "BUILD_YEAR_MODE": {
       "feature_name": "BUILD_YEAR_MODE",
       "dtype": "float64",
-      "min": -5.708949199151834,
-      "max": 7.501492222273618,
-      "mean": 0.46116527575624794,
-      "std": 1.9264578212125143
+      "min": -2.993706602660623,
+      "max": 3.377768241289362,
+      "mean": 0.002005035886650195,
+      "std": 0.99989406347648
     },
     "MAX_FLOORS_MODE": {
       "feature_name": "MAX_FLOORS_MODE",
       "dtype": "float64",
-      "min": -2.810628316618083,
-      "max": 3.139113997281344,
-      "mean": -0.010348605559555192,
-      "std": 0.990490303677069
+      "min": 1,
+      "max": 30,
+      "mean": 5,
+      "std": 4
     },
     "BUILD_YEAR_MEDIAN": {
       "feature_name": "BUILD_YEAR_MEDIAN",
       "dtype": "float64",
-      "min": -2.990601448204536,
-      "max": 3.019653142338043,
-      "mean": -0.009602276106384956,
-      "std": 0.9756704132280556
+      "min": -3.317318321288845,
+      "max": 3.4289104780082136,
+      "mean": -0.038263351907037405,
+      "std": 1.0280808156963817
     },
     "MAX_FLOORS_MEDIAN": {
       "feature_name": "MAX_FLOORS_MEDIAN",
       "dtype": "float64",
-      "min": -3.321114555589139,
-      "max": 3.285723713681842,
-      "mean": 0.034821083691018336,
-      "std": 0.9800906319786031
+      "min": 1,
+      "max": 30,
+      "mean": 5,
+      "std": 4
     },
     "PROPERTY_TOTAL_AREA": {
       "feature_name": "PROPERTY_TOTAL_AREA",
       "dtype": "float64",
-      "min": -8.705917025451004,
-      "max": 5.101133080900489,
-      "mean": -0.47733922931595235,
-      "std": 2.050913463680604
+      "min": 30,
+      "max": 300,
+      "mean": 90,
+      "std": 50
     },
     "DAYS_SINCE_LAST_PHONE_CHANGE": {
       "feature_name": "DAYS_SINCE_LAST_PHONE_CHANGE",
       "dtype": "Int64",
-      "min": -323.0,
-      "max": 285.0,
-      "mean": 0.474,
-      "std": 99.20746668192594
-    },
-    "LOAN_TERM_MONTHS": {
-      "feature_name": "LOAN_TERM_MONTHS",
-      "dtype": "int64",
-      "min": 6,
-      "max": 72,
-      "mean": 36,
-      "std": 15
+      "min": -325.0,
+      "max": 300.0,
+      "mean": 0.13529411764705881,
+      "std": 101.18428920613563
     }
   },
   "credit_summary": {
@@ -802,10 +802,10 @@
     "LOAN_TERM_MONTHS": {
       "feature_name": "LOAN_TERM_MONTHS",
       "dtype": "Int64",
-      "min": -608.0,
-      "max": 609.0,
-      "mean": 53.297,
-      "std": 181.96657007160306
+      "min": 6,
+      "max": 72,
+      "mean": 36,
+      "std": 15
     },
     "REMAINING_TERM_MONTHS": {
       "feature_name": "REMAINING_TERM_MONTHS",
@@ -935,10 +935,10 @@
     "LOAN_ANNUITY": {
       "feature_name": "LOAN_ANNUITY",
       "dtype": "float64",
-      "min": -2.9952668907996163,
-      "max": 3.0137932827179963,
-      "mean": -0.023361411795496445,
-      "std": 0.9933927237478634
+      "min": 200,
+      "max": 5000,
+      "mean": 1200,
+      "std": 700
     },
     "REQUESTED_LOAN_AMOUNT": {
       "feature_name": "REQUESTED_LOAN_AMOUNT",
@@ -951,10 +951,10 @@
     "LOAN_AMOUNT": {
       "feature_name": "LOAN_AMOUNT",
       "dtype": "float64",
-      "min": -3.635200227540102,
-      "max": 3.285723713681842,
-      "mean": -0.000473787927441208,
-      "std": 1.0105827560684975
+      "min": 5000,
+      "max": 150000,
+      "mean": 30000,
+      "std": 20000
     },
     "PURCHASED_GOODS_VALUE": {
       "feature_name": "PURCHASED_GOODS_VALUE",
@@ -978,10 +978,10 @@
     "APPLICATION_HOUR": {
       "feature_name": "APPLICATION_HOUR",
       "dtype": "int64",
-      "min": -333.0,
-      "max": 448.0,
-      "mean": -0.621,
-      "std": 97.18466040079174
+      "min": 0,
+      "max": 23,
+      "mean": 13,
+      "std": 5
     },
     "IS_LAST_APPLICATION_FOR_CONTRACT": {
       "feature_name": "IS_LAST_APPLICATION_FOR_CONTRACT",

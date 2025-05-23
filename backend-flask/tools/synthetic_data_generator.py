@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 from sklearn.datasets import make_classification
-from tools.feature_config import RAW_SCHEMA, DTYPE_MAP, DEFAULT_CATS
+from tools.feature_config import RAW_SCHEMA, DTYPE_MAP, DEFAULT_CATS, DOMAIN_OVERRIDES
 
 
 # —————————————————————————————————————————
@@ -76,46 +76,52 @@ for table, cols in RAW_SCHEMA.items():
             })
         feature_ranges[table][col] = col_info
 
+# Apply overrides to the generated stats
+for table, cols in feature_ranges.items():
+    for feature_name, stats in cols.items():
+        if feature_name in DOMAIN_OVERRIDES:
+            stats.update(DOMAIN_OVERRIDES[feature_name])
 
-# ------------------------------------------------------------------
-# 2)   Money features overrides - 
-#      illustrative USD ranges (chosen by the author, purely for UX)
-# ------------------------------------------------------------------
-feature_ranges["customer_profile"].update({
-    "MONTHLY_INCOME": {
-        "feature_name": "MONTHLY_INCOME",
-        "dtype": "float64",
-        "min":   1_000,    
-        "max":  10_000,    
-        "mean":  4_000,    
-        "std":   2_000,    
-    },
-    "LOAN_AMOUNT": {
-        "feature_name": "LOAN_AMOUNT",
-        "dtype": "float64",
-        "min":     5_000,    
-        "max":   150_000,
-        "mean":  30_000,
-        "std":   20_000
-    },
-    "LOAN_ANNUITY": {
-        "feature_name": "LOAN_ANNUITY",
-        "dtype": "float64",
-        "min":       200,    
-        "max":     5_000,
-        "mean":   1_200,
-        "std":     700
-    },
-})
 
-feature_ranges["customer_profile"]["LOAN_TERM_MONTHS"] = {
-    "feature_name": "LOAN_TERM_MONTHS",
-    "dtype": "int64",
-    "min":     6,        
-    "max":     72,
-    "mean":    36,
-    "std":     15
-}
+# # ------------------------------------------------------------------
+# # 2)   Money features overrides - 
+# #      illustrative USD ranges (chosen by the author, purely for UX)
+# # ------------------------------------------------------------------
+# feature_ranges["customer_profile"].update({
+#     "MONTHLY_INCOME": {
+#         "feature_name": "MONTHLY_INCOME",
+#         "dtype": "float64",
+#         "min":   1_000,    
+#         "max":  10_000,    
+#         "mean":  4_000,    
+#         "std":   2_000,    
+#     },
+#     "LOAN_AMOUNT": {
+#         "feature_name": "LOAN_AMOUNT",
+#         "dtype": "float64",
+#         "min":     5_000,    
+#         "max":   150_000,
+#         "mean":  30_000,
+#         "std":   20_000
+#     },
+#     "LOAN_ANNUITY": {
+#         "feature_name": "LOAN_ANNUITY",
+#         "dtype": "float64",
+#         "min":       200,    
+#         "max":     5_000,
+#         "mean":   1_200,
+#         "std":     700
+#     },
+# })
+
+# feature_ranges["customer_profile"]["LOAN_TERM_MONTHS"] = {
+#     "feature_name": "LOAN_TERM_MONTHS",
+#     "dtype": "int64",
+#     "min":     6,        
+#     "max":     72,
+#     "mean":    36,
+#     "std":     15
+# }
 
 # —————————————————————————————————————————
 # 3) WRITE OUT THE JSON to backend-flask/
