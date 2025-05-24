@@ -244,11 +244,9 @@ def generate_dummy():
 
             # 3) Convert "DAYS_*" columns to approximate years (absolute value)
             if "DAYS" in feature_name.upper():
-                # e.g. if mean = -2000 => ~5.5 years
-                years = abs(col_mean) / 365.0
-                # Add random variation
-                variation = random.uniform(-0.5, 0.5)
-                return round(years + variation, 1)
+                val = abs(random.gauss(col_mean, col_std))  
+                return int(round(val))
+
 
             # 4) For other numeric columns, use truncated normal
             if col_dtype in ["int64", "float64", "Int64"]:

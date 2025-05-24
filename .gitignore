@@ -23,7 +23,6 @@ logs/
 .DS_Store
 
 # Model files and large data artifacts
-*.pkl
 *.h5
 *.pt
 *.ckpt

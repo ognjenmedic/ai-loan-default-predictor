@@ -3,18 +3,18 @@
     "CUSTOMER_ID": {
       "feature_name": "CUSTOMER_ID",
       "dtype": "int64",
-      "min": -320.0,
-      "max": 360.0,
-      "mean": -1.7647058823529411,
-      "std": 97.4526760640412
+      "min": -345.0,
+      "max": 354.0,
+      "mean": 2.007,
+      "std": 102.66583279857143
     },
     "TARGET": {
       "feature_name": "TARGET",
       "dtype": "Int64",
-      "min": -300.0,
-      "max": 329.0,
-      "mean": -1.0019607843137255,
-      "std": 98.29857780510766
+      "min": -623.0,
+      "max": 690.0,
+      "mean": -48.116,
+      "std": 187.9748948798884
     },
     "LOAN_CONTRACT_TYPE": {
       "feature_name": "LOAN_CONTRACT_TYPE",
@@ -91,10 +91,10 @@
     "PURCHASED_GOODS_VALUE": {
       "feature_name": "PURCHASED_GOODS_VALUE",
       "dtype": "float64",
-      "min": -3.6315388139245943,
-      "max": 2.9427526460054367,
-      "mean": 0.04697734624788325,
-      "std": 1.0323960188024726
+      "min": -2.9760324740095245,
+      "max": 2.9452462899351,
+      "mean": 0.002435941709710974,
+      "std": 0.9601716783551136
     },
     "ACCOMPANIED_BY": {
       "feature_name": "ACCOMPANIED_BY",
@@ -148,10 +148,10 @@
     "REGION_POPULATION_RATIO": {
       "feature_name": "REGION_POPULATION_RATIO",
       "dtype": "float64",
-      "min": -3.4360623896680225,
-      "max": 3.285723713681842,
-      "mean": 0.03649762029193305,
-      "std": 1.0341489198742184
+      "min": -3.0942892490913896,
+      "max": 3.284118201287884,
+      "mean": 0.008780797368694067,
+      "std": 1.0168551753252077
     },
     "AGE_DAYS": {
       "feature_name": "AGE_DAYS",
@@ -172,18 +172,18 @@
     "DAYS_SINCE_REGISTRATION": {
       "feature_name": "DAYS_SINCE_REGISTRATION",
       "dtype": "float64",
-      "min": -3.3078999524973884,
-      "max": 3.1580734261856236,
-      "mean": -0.005025973731310655,
-      "std": 0.952988935640824
+      "min": -3.448042914238091,
+      "max": 3.103201276114097,
+      "mean": 0.02649957297261131,
+      "std": 0.981656625763241
     },
     "DAYS_SINCE_ID_ISSUE": {
       "feature_name": "DAYS_SINCE_ID_ISSUE",
       "dtype": "int64",
-      "min": -295.0,
-      "max": 360.0,
-      "mean": -2.4941176470588236,
-      "std": 100.78239057472642
+      "min": -353.0,
+      "max": 329.0,
+      "mean": -3.663,
+      "std": 100.28500642425823
     },
     "HAS_MOBILE": {
       "feature_name": "HAS_MOBILE",
@@ -261,18 +261,18 @@
     "REGION_SCORE": {
       "feature_name": "REGION_SCORE",
       "dtype": "Int64",
-      "min": -688.0,
-      "max": 685.0,
-      "mean": -51.19019607843137,
-      "std": 200.0894576723131
+      "min": -3,
+      "max": 3,
+      "mean": 0,
+      "std": 1
     },
     "REGION_CITY_SCORE": {
       "feature_name": "REGION_CITY_SCORE",
       "dtype": "Int64",
-      "min": -386.0,
-      "max": 268.0,
-      "mean": -1.5637254901960784,
-      "std": 98.33590296237709
+      "min": -447.0,
+      "max": 296.0,
+      "mean": -0.006,
+      "std": 100.30071883191165
     },
     "APPLICATION_DAY_OF_WEEK": {
       "feature_name": "APPLICATION_DAY_OF_WEEK",
@@ -360,21 +360,13 @@
       "mean": 0.5,
       "std": 0.2
     },
-    "SECONDARY_CREDIT_SCORE": {
-      "feature_name": "SECONDARY_CREDIT_SCORE",
-      "dtype": "float64",
-      "min": 0.0,
-      "max": 1.0,
-      "mean": 0.6,
-      "std": 0.15
-    },
     "BUILD_YEAR_AVG": {
       "feature_name": "BUILD_YEAR_AVG",
       "dtype": "float64",
-      "min": -6.99298629552982,
-      "max": 5.80979057898384,
-      "mean": 0.48342169550520386,
-      "std": 1.9611601360547928
+      "min": -3.2369936930968692,
+      "max": 3.6916245011978046,
+      "mean": 0.02908406325201024,
+      "std": 0.9834962309668639
     },
     "MAX_FLOORS_AVG": {
       "feature_name": "MAX_FLOORS_AVG",
@@ -387,26 +379,26 @@
     "BUILD_YEAR_MODE": {
       "feature_name": "BUILD_YEAR_MODE",
       "dtype": "float64",
-      "min": -2.993706602660623,
-      "max": 3.377768241289362,
-      "mean": 0.002005035886650195,
-      "std": 0.99989406347648
+      "min": -5.708949199151834,
+      "max": 7.501492222273618,
+      "mean": 0.46116527575624794,
+      "std": 1.9264578212125143
     },
     "MAX_FLOORS_MODE": {
       "feature_name": "MAX_FLOORS_MODE",
       "dtype": "float64",
       "min": 1,
-      "max": 30,
+      "max": 10,
       "mean": 5,
-      "std": 4
+      "std": 2
     },
     "BUILD_YEAR_MEDIAN": {
       "feature_name": "BUILD_YEAR_MEDIAN",
       "dtype": "float64",
-      "min": -3.317318321288845,
-      "max": 3.4289104780082136,
-      "mean": -0.038263351907037405,
-      "std": 1.0280808156963817
+      "min": -2.990601448204536,
+      "max": 3.019653142338043,
+      "mean": -0.009602276106384956,
+      "std": 0.9756704132280556
     },
     "MAX_FLOORS_MEDIAN": {
       "feature_name": "MAX_FLOORS_MEDIAN",
@@ -427,10 +419,10 @@
     "DAYS_SINCE_LAST_PHONE_CHANGE": {
       "feature_name": "DAYS_SINCE_LAST_PHONE_CHANGE",
       "dtype": "Int64",
-      "min": -325.0,
-      "max": 300.0,
-      "mean": 0.13529411764705881,
-      "std": 101.18428920613563
+      "min": -323.0,
+      "max": 285.0,
+      "mean": 0.474,
+      "std": 99.20746668192594
     }
   },
   "credit_summary": {

@@ -56,7 +56,6 @@ RAW_SCHEMA = {
         "SAME_CITY_WORK_LIVE",
         "EMPLOYER_CATEGORY",
         "EXTERNAL_CREDIT_SCORE",
-        "SECONDARY_CREDIT_SCORE",
         "BUILD_YEAR_AVG",
         "MAX_FLOORS_AVG",
         "BUILD_YEAR_MODE",
@@ -210,7 +209,6 @@ DTYPE_MAP = {
     "SAME_CITY_WORK_LIVE":          "category",
     "EMPLOYER_CATEGORY":            "category",
     "EXTERNAL_CREDIT_SCORE":        "float64",
-    "SECONDARY_CREDIT_SCORE":       "float64",
     "BUILD_YEAR_AVG":               "float64",
     "MAX_FLOORS_AVG":               "float64",
     "BUILD_YEAR_MODE":              "float64",
@@ -437,9 +435,9 @@ DOMAIN_OVERRIDES = {
     },
     "MAX_FLOORS_MODE": {
         "min": 1,
-        "max": 30,
+        "max": 10,
         "mean": 5,
-        "std": 4
+        "std": 2
     },
     "MAX_FLOORS_MEDIAN": {
         "min": 1,
@@ -453,19 +451,20 @@ DOMAIN_OVERRIDES = {
         "mean": 90,
         "std": 50
     },
+        "REGION_SCORE": {
+        "min": -3,
+        "max": 3,
+        "mean": 0,
+        "std": 1
+    },
 
-    # Credit Scores
+    # Credit Score
     "EXTERNAL_CREDIT_SCORE": {
         "min": 0.0,
         "max": 1.0,
         "mean": 0.5,
         "std": 0.2
     },
-    "SECONDARY_CREDIT_SCORE": {
-        "min": 0.0,
-        "max": 1.0,
-        "mean": 0.6,
-        "std": 0.15
-    }
+
 }
 
