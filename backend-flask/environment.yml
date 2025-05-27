@@ -69,3 +69,4 @@ dependencies:
   - zipp=3.21.0
   - zstandard=0.23.0
   - zstd=1.5.7
+  - shap=0.47.2
